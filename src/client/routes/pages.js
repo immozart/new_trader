@@ -3,9 +3,13 @@ export const PAGES = {
     name: 'home',
     path: '/'
   },
-  info: {
-    name: 'info',
-    path: '/info'
+  login: {
+    name: 'login',
+    path: '/login'
+  },
+  registration: {
+    name: 'registration',
+    path: '/registration'
   },
   statistic: {
     name: 'statistic',
@@ -22,10 +26,6 @@ export const PAGES = {
   page404: {
     name: 'page404',
     path: '/page404'
-  },
-  login: {
-    name: 'login',
-    path: '/login'
   },
   API: {
     fetchUser: {
