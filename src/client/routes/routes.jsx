@@ -6,6 +6,7 @@ import HomePage from '../components/home-page/home-page';
 import Page404 from '../components/page404/page404';
 import Trades from '../components/trades';
 import Statiscic from '../components/statistics';
+import Settings from '../components/settings';
 
 
 const WrappedApp = (Component, props) => (
@@ -29,14 +30,12 @@ export default () => (
       render={ props => WrappedApp(Trades, props) }
     />
     <Route
-      exact path={ PAGES.page404.path }
-      render={ props => WrappedApp(Page404, props) }
+      exact path={ PAGES.settings.path }
+      render={ props => WrappedApp(Settings, props) }
     />
     <Route
-      path = '/'
-      render={ () => (
-        <Redirect to={ PAGES.page404.path } />
-      ) }
+      exact path={ PAGES.page404.path }
+      render={ props => WrappedApp(Page404, props) }
     />
   </Switch>
 );
