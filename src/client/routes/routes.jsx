@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { PAGES } from './pages';
 import App from '../components/app/app';
 import HomePage from '../components/home-page/home-page';
+import Statistic from '../components/Statistic/Statistic';
 import Page404 from '../components/page404/page404';
 import Trades from '../components/trades';
 import Statiscic from '../components/statistics';
