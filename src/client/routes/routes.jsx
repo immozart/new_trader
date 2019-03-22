@@ -7,8 +7,9 @@ import Page404 from '../components/page404/page404';
 import Trades from '../components/trades';
 import Statiscic from '../components/statistics';
 
+
 const WrappedApp = (Component, props) => (
-  <App appName='Fancy React Redux App'>
+  <App>
     <Component { ...props } />
   </App>
 );
