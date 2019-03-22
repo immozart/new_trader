@@ -3,39 +3,49 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { PAGES } from './pages';
 import App from '../components/app/app';
 import HomePage from '../components/home-page/home-page';
+import Login from '../components/login/login';
+import Registration from '../components/registration/registration';
 import Page404 from '../components/page404/page404';
 import Trades from '../components/trades';
-import Statiscic from '../components/statistics';
+import Statistic from '../components/statistics';
 import Settings from '../components/settings';
 
 
 const WrappedApp = (Component, props) => (
   <App>
-    <Component { ...props } />
+    <Component {...props} />
   </App>
 );
 
 export default () => (
   <Switch>
     <Route
-      exact path={ PAGES.home.path }
-      render={ props => WrappedApp(HomePage, props) }
+      exact path={PAGES.home.path}
+      render={props => WrappedApp(HomePage, props)}
     />
     <Route
-      exact path={ PAGES.statistic.path }
-      render={ props => WrappedApp(Statiscic, props) }
+      exact path={PAGES.login.path}
+      render={props => WrappedApp(Login, props)}
     />
     <Route
-      exact path={ PAGES.trades.path }
-      render={ props => WrappedApp(Trades, props) }
+      exact path={PAGES.registration.path}
+      render={props => WrappedApp(Registration, props)}
     />
     <Route
-      exact path={ PAGES.settings.path }
-      render={ props => WrappedApp(Settings, props) }
+      exact path={PAGES.statistic.path}
+      render={props => WrappedApp(Statistic, props)}
     />
     <Route
-      exact path={ PAGES.page404.path }
-      render={ props => WrappedApp(Page404, props) }
+      exact path={PAGES.trades.path}
+      render={props => WrappedApp(Trades, props)}
+    />
+    <Route
+      exact path={PAGES.settings.path}
+      render={props => WrappedApp(Settings, props)}
+    />
+    <Route
+      exact path={PAGES.page404.path}
+      render={props => WrappedApp(Page404, props)}
     />
   </Switch>
 );
