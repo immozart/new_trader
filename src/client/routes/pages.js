@@ -19,7 +19,6 @@ export const PAGES = {
     name: 'settings',
     path: '/settings'
   },
-
   page404: {
     name: 'page404',
     path: '/page404'
