@@ -37,12 +37,10 @@ export default class App extends Component {
     return (
       <div className={ cn('menu') }>
         <div className={ cn('menu-list')}>
-
           <div><Link to={ PAGES.home.path }>Home Page</Link></div>  
           <div><Link to={ PAGES.settings.path }>Настройки</Link></div>
           <div><Link to={ PAGES.trades.path }>Журнал Сделок</Link></div>
           <div><Link to={ PAGES.statistic.path }>Статистика</Link></div>      
-
         </div>
       </div>
     );
