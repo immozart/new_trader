@@ -47,7 +47,9 @@ export default class App extends Component {
           <img alt='Elbrus Image' src={ elbrusImg } height='100px' />
         </div>
         <div className={ cn('menu-list')}>
-          <div><Link to={ PAGES.home.path }>Home Page</Link></div>
+          <div><Link to={ PAGES.home.path }>Home Page</Link></div>  
+          <div><Link to={ PAGES.trades.path }>Журнал Сделок</Link></div>
+          <div><Link to={ PAGES.statistic.path }>Статистика</Link></div>
           <div><Link to={ PAGES.page404.path }>Page 404</Link></div>
         </div>
       </div>

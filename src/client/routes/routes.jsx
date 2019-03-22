@@ -4,6 +4,8 @@ import { PAGES } from './pages';
 import App from '../components/app/app';
 import HomePage from '../components/home-page/home-page';
 import Page404 from '../components/page404/page404';
+import Trades from '../components/trades';
+import Statiscic from '../components/statistics';
 
 const WrappedApp = (Component, props) => (
   <App appName='Fancy React Redux App'>
@@ -16,6 +18,14 @@ export default () => (
     <Route
       exact path={ PAGES.home.path }
       render={ props => WrappedApp(HomePage, props) }
+    />
+    <Route
+      exact path={ PAGES.statistic.path }
+      render={ props => WrappedApp(Statiscic, props) }
+    />
+    <Route
+      exact path={ PAGES.trades.path }
+      render={ props => WrappedApp(Trades, props) }
     />
     <Route
       exact path={ PAGES.page404.path }
