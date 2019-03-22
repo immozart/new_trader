@@ -7,6 +7,10 @@ export const PAGES = {
     name: 'info',
     path: '/info'
   },
+  statistic: {
+    name: 'statistic',
+    path: '/statistic'
+  },
   page404: {
     name: 'page404',
     path: '/page404'

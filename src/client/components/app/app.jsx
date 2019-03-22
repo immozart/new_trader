@@ -48,6 +48,7 @@ export default class App extends Component {
         </div>
         <div className={ cn('menu-list')}>
           <div><Link to={ PAGES.home.path }>Home Page</Link></div>
+          <div><Link to={ PAGES.statistic.path }>Statistic</Link></div>
           <div><Link to={ PAGES.page404.path }>Page 404</Link></div>
         </div>
       </div>
