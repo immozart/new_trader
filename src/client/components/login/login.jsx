@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
 
@@ -7,7 +6,7 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    error: {}
+    errors: {}
   };
 
   getEmail = (e) => {
@@ -24,49 +23,38 @@ class Login extends Component {
 
   submit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post('http://localhost:3001/login',
+    const { data } = await axios.post('http://localhost:3000/api/login',
       {
         email: this.state.email,
         password: this.state.password
-      }, {
-        headers:
-          {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-          }
+      },
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        }
       });
 
-    console.log(data);
-
-    if (data.email) {
+    if (data.errors) {
       this.setState({
-        error: data
+        errors: {
+          email: data.errors.email,
+          password: data.errors.password
+        }
       });
     }
 
-    if (data.password) {
+    if (data.success) {
       this.setState({
-        error: data
+        errors: {}
       });
+      this.props.history.push('/');
     }
+  }
 
-    if (data === false) {
-      this.setState({
-        error: { password: 'Вы ввели неправильный пароль.' }
-      });
-    }
-
-    if (data === true) {
-      this.setState({
-        error: {}
-      });
-      this.props.history.replace('/journal')
-    }
-  };
 
   render() {
-    const { email, password } = this.state.error;
-
+    const { email, password } = this.state.errors;
 
     return (
       <form className="login">
@@ -76,18 +64,18 @@ class Login extends Component {
           <div className="form-group has-danger">
             <label htmlFor="email">Электронная почта</label>
             <input type="email"
-                   className={email ? 'form-control is-invalid' : 'form-control'} id="email"
-                   placeholder="например, rauf.erk@gmail.com"
-                   onChange={this.getEmail} value={this.state.email}/>
+              className={email ? 'form-control is-invalid' : 'form-control'} id="email"
+              placeholder="например, rauf.erk@gmail.com"
+              onChange={this.getEmail} value={this.state.email} />
             {<div className="invalid-feedback">{email}</div>}
           </div>
 
           <div className="form-group has-danger">
             <label htmlFor="password">Пароль</label>
             <input type="password"
-                   className={password ? 'form-control is-invalid' : 'form-control'} id="password"
-                   placeholder="например, **********"
-                   onChange={this.getPassword} value={this.state.password}/>
+              className={password ? 'form-control is-invalid' : 'form-control'} id="password"
+              placeholder="например, **********"
+              onChange={this.getPassword} value={this.state.password} />
             {<div className="invalid-feedback">{password}</div>}
           </div>
 
@@ -98,4 +86,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default Login;
