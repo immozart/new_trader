@@ -2,14 +2,19 @@
 /* eslint-disable consistent-return */
 const express = require('express');
 
+const Users = require('./models/users');
+const Order = require('./models/trades');
 const router = express.Router();
 
-router.get('/user', (req, res) => {
-  setTimeout(() => res.send({
-    name: 'Michael',
-    email: 'mk@elbrusboot.camp'
-  }), 1000);
+
+router.get('/user', async (req, res) => {
+  const orderInfo = await Order.find();
+  console.log('-------------------------------------------------------------------------------------')
+  console.log(orderInfo)
+  console.log('-------------------------------------------------------------------------------------')
+  res.send({ orderInfo: orderInfo }); 
 });
+
 
 router.get('/posts', (req, res) => {
   setTimeout(() => res.send([
