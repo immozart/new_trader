@@ -27,6 +27,7 @@ async function seed() {
         const trade = await new Trades({
             user: 'traider',
             tradeData: faker.date.past(),
+            number: i+1,
             security: tmpBUM,
             securityFactor: securityFactor,
             openPrice: faker.random.number(100, 200),

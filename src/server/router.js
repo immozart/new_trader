@@ -3,18 +3,23 @@
 const express = require('express');
 
 const Users = require('./models/users');
-const Order = require('./models/trades');
+const Trades = require('./models/trades');
 const router = express.Router();
 
 
+router.get('/data', async (req, res) => {
+  const tradesInfo = await Trades.find();
+  res.send({ tradesInfo: tradesInfo }); 
+});
+
+
 router.get('/user', async (req, res) => {
-  const orderInfo = await Order.find();
+  const tradesInfo = await Trades.find();
   console.log('-------------------------------------------------------------------------------------')
   console.log(orderInfo)
   console.log('-------------------------------------------------------------------------------------')
-  res.send({ orderInfo: orderInfo }); 
+  res.send({ tradesInfo: tradesInfo }); 
 });
-
 
 router.get('/posts', (req, res) => {
   setTimeout(() => res.send([
