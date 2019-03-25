@@ -6,11 +6,11 @@ import './navbar.css';
 class NavBar extends Component {
 
   state = {
-    user: ''
+    user: '1'
   };
 
   async componentDidMount() {
-    const { data } = await axios.get('http://localhost:3001/');
+    const { data } = await axios.get('http://localhost:3000/api');
     console.log('data is', data);
     this.setState({
       user: data
@@ -21,13 +21,13 @@ class NavBar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <Link className="navbar-brand" to="/">Trader's Journal</Link>
+        <Link className="navbar-brand" to="/"><b>Trader's Journal</b></Link>
 
         <div className="collapse navbar-collapse" id="navbarColor02">
 
           {this.state.user && <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/trades">Журнал</Link>
+              <Link className="nav-link" to="/journal">Журнал</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/statistic">Статистика</Link>
@@ -41,10 +41,10 @@ class NavBar extends Component {
 
         <div>
           <Link to="/login">
-            <button className="btn btn-secondary">Войти</button>
+            <button className="btn btn-dark">Войти</button>
           </Link>
           <Link to="/registration">
-            <button className="btn btn-success enter">Зарегистрироваться</button>
+            <button className="btn btn-warning enter">Зарегистрироваться</button>
           </Link>
         </div>
       </nav>

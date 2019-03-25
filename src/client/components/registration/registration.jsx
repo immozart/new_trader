@@ -33,7 +33,7 @@ class Registration extends Component {
   submit = async (e) => {
     e.preventDefault();
 
-    const { data } = await axios.post('http://localhost:3001/registration',
+    const { data } = await axios.post('http://localhost:3000/api/registration',
       {
         firstName: this.state.firstName,
         email: this.state.email,

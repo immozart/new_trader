@@ -6,7 +6,7 @@ import HomePage from '../components/home-page/home-page';
 import Login from '../components/login/login';
 import Registration from '../components/registration/registration';
 import Page404 from '../components/page404/page404';
-import Trades from '../components/trades';
+import Journal from '../components/journal';
 import Statistic from '../components/statistics';
 import Settings from '../components/settings';
 
@@ -36,8 +36,8 @@ export default () => (
       render={props => WrappedApp(Statistic, props)}
     />
     <Route
-      exact path={PAGES.trades.path}
-      render={props => WrappedApp(Trades, props)}
+      exact path={PAGES.journal.path}
+      render={props => WrappedApp(Journal, props)}
     />
     <Route
       exact path={PAGES.settings.path}

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const tradesSchema = new mongoose.Schema({
     user: String,
     tradeData: Date,
+    number: Number,
     security: String,
     securityFactor: Number,
     openPrice: Number,

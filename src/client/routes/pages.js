@@ -15,9 +15,9 @@ export const PAGES = {
     name: 'statistic',
     path: '/statistic'
   },
-  trades: {
-    name: 'trades',
-    path: '/trades'
+  journal: {
+    name: 'journal',
+    path: '/journal'
   },
   settings: {
     name: 'settings',
@@ -31,6 +31,10 @@ export const PAGES = {
     fetchUser: {
       name: 'fetchUser',
       path: '/api/user'
+    },
+    fetchData: {
+      name: 'fetchData',
+      path: '/api/data'
     },
     fetchPosts: {
       name: 'fetchPosts',

@@ -24,7 +24,7 @@ class Login extends Component {
 
   submit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post('http://localhost:3001/login',
+    const { data } = await axios.post('http://localhost:3000/api/login',
       {
         email: this.state.email,
         password: this.state.password
