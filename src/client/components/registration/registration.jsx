@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import classnames from 'classnames';
+import { registerUserAC } from '../../redux/actions/auth-actions';
 import './registration.css';
 
 
@@ -108,4 +112,9 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+const mapStatetoProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStatetoProps, { registerUserAC })(withRouter(Registration));
