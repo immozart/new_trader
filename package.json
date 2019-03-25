@@ -21,7 +21,7 @@
     "build-client": "webpack --mode production",
     "build": "npm run build-server && npm run build-client",
     "start-build": "NODE_ENV=localhost APP_MOCKS=0 node ./.build/server/app",
-    "start-server": "SERVICE_HOST=0.0.0.0:3001 NODE_ENV=localhost APP_MOCKS=0 APP_MODE_DEV=1 nodemon --exec babel-node src/server/app",
+    "start-server": "SERVICE_HOST=0.0.0.0:3000 NODE_ENV=localhost APP_MOCKS=0 APP_MODE_DEV=1 nodemon --exec babel-node src/server/app",
     "start-client": "webpack-dev-server --mode development",
     "start": "node start.js"
   },
@@ -44,6 +44,7 @@
     "mongoose": "^5.4.19",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "npm": "^6.9.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
