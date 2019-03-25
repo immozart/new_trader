@@ -6,8 +6,10 @@ import handlebars from 'handlebars';
 import bodyParser from 'body-parser';
 import config from './config/default';
 import router from './router';
+
 const mongoose = require('mongoose');
-const db = mongoose.connect('mongodb://localhost:27017/new_traider', { useNewUrlParser: true });
+
+mongoose.connect('mongodb://localhost:27017/new_traider', { useNewUrlParser: true });
 
 const winston = require('winston');
 const expressWinston = require('express-winston');

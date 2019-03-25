@@ -26,6 +26,7 @@
     "start": "node start.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "chart.js": "^2.8.0",
     "connected-react-router": "^5.0.1",
