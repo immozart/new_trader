@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-var Chart = require('chart.js');
+const Chart = require('chart.js');
 
 export default class Statistic extends Component {
   canvasPaint() {
@@ -41,14 +41,13 @@ export default class Statistic extends Component {
       }
     });
   }
-  
+
   render() {
     return (
       <div >
         <h1>Statistic</h1>
         <canvas id="myChart" width="400" height="400"></canvas>
         <div> <button onClick={this.canvasPaint}>canvas</button></div>
-
       </div>
     );
   }
