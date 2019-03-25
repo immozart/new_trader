@@ -1,34 +1,30 @@
 import React, { Component } from 'react';
 import { PAGES } from '../../routes/pages';
-
 export default class Trades extends Component {
-
   state = {
-    userInfo: ''
+    orderInfo: ''
   };
-
   fetchUser = async () => {
     try {
-      const user = await fetch(PAGES.API.fetchUser.path);
-      this.state.userInfo = await user.json();
-      console.log('userInfo', this.state.userInfo);
+      const dataFromBase = await fetch(PAGES.API.fetchUser.path);
+      this.setState({
+        orderInfo: await dataFromBase.json()     
+      })    
     } catch (e) {
       console.error(e);
     }
   };
-
-  componentWillMount() {
-    this.fetchUser()
+  componentDidMount() {
+    this.fetchUser();
   }
-
-  render() {    
-    let usertext = this.state.userInfo;
+  render() {
+    let { orderInfo } = this.state;  
     return (
-      <div className='СДЕЛКИ'>
+      <div>
         <h2>СДЕЛКИ</h2>
-        {/* <div> {this.renderSayButtons()}</div> */}
-        {usertext.name}
-        <br></br>      
+        <div>---------------------</div>
+        <div>{JSON.stringify(orderInfo)}</div>
+        <div>------------------</div>
       </div>
     );
   }
