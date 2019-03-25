@@ -20,15 +20,21 @@ export default class Journal extends Component {
   componentDidMount() {
     this.fetchData();
   }
+  signalNames = ['sig 1', 'sig 2', 'sig 3', 'sig 4', 'sig 5', 'sig 6', 'sig 7', 'sig 8', 'sig 9', 'sig 10'];
+  SignalHeader = this.signalNames.map((item) => {
+    return (
+      <th key={item} scope="col">{item}</th>
+    );
+  });
 
+  //   SignalsValue = (signalsArr) => {
+  //     signalsArr.map((item)=>
+  //     return (
+  //       <th key={item} scope="col">{item}</th>
+  //     )
+  //     );
 
-  SignalHeader = () => {
-    const SignalHeaders = ['1', '2', '3', '4', '5'];
-    for (let i = 0; i < SignalHeaders.length; i++) {
-      <th key={'th'+i} scope="col">`signal ${i}`</th>
-    }
-  }
-
+  // });
 
   render() {
 
@@ -36,45 +42,42 @@ export default class Journal extends Component {
     // let myObject = JSON.parse(tradesInfo);
     return (
       <div>
-        <h2>СДЕЛКИ</h2>
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">number</th>
-              <th scope="col">tradeData</th>
-              <th scope="col">security</th>
-              <th scope="col">Factor</th>
-              <th scope="col">openPrice</th>
-              <th scope="col">signal 1</th>
-              <th scope="col">signal 2</th>
-              <th scope="col">signal 3</th>
-              <th scope="col">signal 4</th>
-              <th scope="col">signal 5</th>
-              <th scope="col">signal 6</th>
-              <th scope="col">signal 7</th>
-              <th scope="col">signal 8</th>
-              <th scope="col">signal 9</th>
-              <th scope="col">signal 10</th>
+        <h3><b><i>СДЕЛКИ</i></b></h3>
+        <table className="table">
+          <thead className="thead-dark">
+            <tr key={'Table_header'}>
+              <th key={'number'} scope="col">number</th>
+              <th key={'tradeData'} scope="col">tradeData</th>
+              <th key={'security'} scope="col">security</th>
+              <th key={'factor'} scope="col">factor</th>
+              <th key={'openPrice'} scope="col">openPrice</th>
+              <th key={'closePrice'} scope="col">closePrice</th>
+              {this.SignalHeader}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-
+            {tradesInfo.map(trade =>
+              <tr key={trade.number}>
+                <td key={trade.number} >{trade.number}</td>
+                <td>{trade.tradeData}</td>
+                <td>{trade.security}</td>
+                <td>{trade.factor}</td>
+                <td>{trade.openPrice}</td>
+                <td>{trade.closePrice}</td>
+                {/* <td>{trade.signals}</td>
+                <td>{trade.signals}</td>
+                <td>{trade.signals}</td>
+                <td>{trade.signals}</td>
+                <td>{trade.signals}</td>
+                <td>{trade.signals}</td>
+                <td>{trade.signals}</td> */}
+                {/* {this.SignalsValue(trade.signals)} */}
+                {trade.signals.map(signal => <td>{signal}</td>)}
+              </tr>
+            )}
           </tbody>
         </table>
-        <div>
-          {tradesInfo.map(trade =>
-            <div key={trade._id}>
-              <div>{trade.security}</div>
-            </div>
-          )}
-        </div>
-      </div>
+      </div >
     );
   }
 }
