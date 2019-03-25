@@ -1,13 +1,17 @@
 import express from 'express';
-
+const Users = require('./models/users');
+const Order = require('./models/trades');
 const router = express.Router();
 
-router.get('/user', (req, res) => {
-  setTimeout(() => res.send({
-    name: 'Michael',
-    email: 'mk@elbrusboot.camp'
-  }), 1000);
+
+router.get('/user', async (req, res) => {
+  const orderInfo = await Order.find();
+  console.log('-------------------------------------------------------------------------------------')
+  console.log(orderInfo)
+  console.log('-------------------------------------------------------------------------------------')
+  res.send({ orderInfo: orderInfo }); 
 });
+
 
 router.get('/posts', (req, res) => {
   setTimeout(() => res.send([
@@ -16,10 +20,12 @@ router.get('/posts', (req, res) => {
   ]), 1000);
 });
 
+
 const usersArr = [
   { login: 'mike', name: 'Michael Klishevich' },
   { login: 'john', name: 'John King' }
 ];
+
 
 router.post('/login', (req, res) => {
   console.log(JSON.stringify(req.body));
@@ -35,5 +41,4 @@ router.post('/login', (req, res) => {
     }
   }, 1000);
 });
-
 export default router;
