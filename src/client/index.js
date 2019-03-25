@@ -21,7 +21,8 @@ const initialState = {
   app: {
     name: 'Express React Skeleton',
     say: 'nothing for now'
-  }
+  },
+  auth: {}
 };
 
 const store = createStore(
