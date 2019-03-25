@@ -6,7 +6,7 @@ const tradesSchema = new mongoose.Schema({
     tradeData: Date,
     number: Number,
     security: String,
-    securityFactor: Number,
+    factor: Number,
     openPrice: Number,
     closePrice: Number,
     signals: Array
