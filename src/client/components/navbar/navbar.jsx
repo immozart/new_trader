@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './navbar.css';
 
 class NavBar extends Component {
-
   state = {
     user: ''
   };
 
-  async componentDidMount() {
-    const { data } = await axios.get('http://localhost:3001/');
-    console.log('data is', data);
-    this.setState({
-      user: data
-    });
-  }
+  // async componentDidMount() {
+  //   const { data } = await axios.get('http://localhost:3000/api/');
+  //   this.setState({
+  //     user: '1'
+  //   });
+  // }
 
 
   render() {
