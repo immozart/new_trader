@@ -19,6 +19,7 @@ export default function appReducer(state = appReducerInitState, action) {
     case APP_TYPES.USER_LOADING:
       return {
         ...state,
+        isAuthenticated: true,
         loading: true
       };
     default:

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { PAGES } from './pages';
 import App from '../components/app/app';
 import HomePage from '../components/home-page/home-page';
+import Dashboard from '../components/dashboard/dashboard';
 import Login from '../components/login/login';
 import Registration from '../components/registration/registration';
 import Page404 from '../components/page404/page404';
@@ -17,6 +18,18 @@ const WrappedApp = (Component, props) => (
   </App>
 );
 
+// const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={props => (auth.isAuthenticated === true ? (
+//         <Component {...props} />
+//     ) : (
+//           <Redirect to="/login" />
+//     ))
+//     }
+//   />
+// );
+
 export default () => (
   <Switch>
     <Route
@@ -30,6 +43,10 @@ export default () => (
     <Route
       exact path={PAGES.registration.path}
       render={props => WrappedApp(Registration, props)}
+    />
+    <Route
+      exact path={PAGES.dashboard.path}
+      render={props => WrappedApp(Dashboard, props)}
     />
     <Route
       exact path={PAGES.statistic.path}
