@@ -27,19 +27,8 @@ export default class Journal extends Component {
     );
   });
 
-  //   SignalsValue = (signalsArr) => {
-  //     signalsArr.map((item)=>
-  //     return (
-  //       <th key={item} scope="col">{item}</th>
-  //     )
-  //     );
-
-  // });
-
   render() {
-
     let { tradesInfo } = this.state.tradesInfo;
-    // let myObject = JSON.parse(tradesInfo);
     return (
       <div>
         <h3><b><i>СДЕЛКИ</i></b></h3>
@@ -63,15 +52,7 @@ export default class Journal extends Component {
                 <td>{trade.security}</td>
                 <td>{trade.factor}</td>
                 <td>{trade.openPrice}</td>
-                <td>{trade.closePrice}</td>
-                {/* <td>{trade.signals}</td>
-                <td>{trade.signals}</td>
-                <td>{trade.signals}</td>
-                <td>{trade.signals}</td>
-                <td>{trade.signals}</td>
-                <td>{trade.signals}</td>
-                <td>{trade.signals}</td> */}
-                {/* {this.SignalsValue(trade.signals)} */}
+                <td>{trade.closePrice}</td>   
                 {trade.signals.map(signal => <td>{signal}</td>)}
               </tr>
             )}

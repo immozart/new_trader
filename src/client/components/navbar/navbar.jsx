@@ -39,10 +39,10 @@ class NavBar extends Component {
 
         <div>
           <Link to="/login">
-            <button className="btn btn-secondary">Войти</button>
+            <button className="btn btn-dark">Войти</button>
           </Link>
           <Link to="/registration">
-            <button className="btn btn-success enter">Зарегистрироваться</button>
+            <button className="btn btn-warning enter">Зарегистрироваться</button>
           </Link>
         </div>
       </nav>
