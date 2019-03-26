@@ -176,11 +176,14 @@ export default class Statistic extends Component {
     return (
       <div>
         <div>
+
           {JSON.stringify(tradesInfo)}
           {/* {tradesInfo.map(trade => <div key={trade.number}>{trade.number}</div>)} */}
+
         </div>
         <div id='grid'>
           <div>
+
             <canvas className='canvasChart' id="myChart" width="100" height="100"></canvas>
           </div>
           <div>
