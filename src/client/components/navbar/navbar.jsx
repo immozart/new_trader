@@ -1,33 +1,31 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './navbar.css';
 
 class NavBar extends Component {
-
   state = {
     user: '1'
   };
 
-  async componentDidMount() {
-    const { data } = await axios.get('http://localhost:3001/');
-    console.log('data is', data);
-    this.setState({
-      user: data
-    });
-  }
+  // async componentDidMount() {
+  //   const { data } = await axios.get('http://localhost:3000/api/');
+  //   this.setState({
+  //     user: '1'
+  //   });
+  // }
 
 
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <Link className="navbar-brand" to="/">Trader's Journal</Link>
+        <Link className="navbar-brand" to="/"><b>Trader's Journal</b></Link>
 
         <div className="collapse navbar-collapse" id="navbarColor02">
 
           {this.state.user && <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/trades">Журнал</Link>
+              <Link className="nav-link" to="/journal">Журнал</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/statistic">Статистика</Link>

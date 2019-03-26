@@ -6,6 +6,9 @@ import handlebars from 'handlebars';
 import bodyParser from 'body-parser';
 import config from './config/default';
 import router from './router';
+import authRouter from './auth-router';
+
+const passport = require('passport');
 
 const mongoose = require('mongoose');
 
@@ -20,6 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 const { buildConfig: { assetsDir, targetDir }, server: { port }, proxyAssets } = config;
 
@@ -49,6 +55,7 @@ app.use(expressWinston.logger({
 }));
 
 app.use('/api', router);
+app.use('/api', authRouter);
 
 app.use('*', (req, res) => {
   const template = handlebars.compile(fs.readFileSync(

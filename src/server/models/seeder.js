@@ -20,15 +20,16 @@ async function seed() {
 
         tmpBUM = 'USD';
         securityFactor = 1;
-        if (i % 2 === 0) {tmpBUM = securitysArr[0];  securityFactor = 10;}
-        if (i % 3 === 0) {tmpBUM = securitysArr[1];  securityFactor = 100;}
-        if (i % 4 === 0) {tmpBUM = securitysArr[2];  securityFactor = 50;}
+        if (i % 2 === 0) { tmpBUM = securitysArr[0]; securityFactor = 10; }
+        if (i % 3 === 0) { tmpBUM = securitysArr[1]; securityFactor = 100; }
+        if (i % 4 === 0) { tmpBUM = securitysArr[2]; securityFactor = 50; }
 
         const trade = await new Trades({
             user: 'traider',
             tradeData: faker.date.past(),
+            number: i+1,
             security: tmpBUM,
-            securityFactor: securityFactor,
+            factor: securityFactor,
             openPrice: faker.random.number(100, 200),
             closePrice: faker.random.number(100, 200),
             signals: signalsArr
@@ -38,9 +39,7 @@ async function seed() {
     }
     console.log('done!')
 };
-
 seed()
-
 // router.get('/', (req, res) => {
 //     res.render('superseeds')
 // });
