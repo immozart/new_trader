@@ -1,35 +1,25 @@
 import React, { Component } from 'react';
 import { PAGES } from '../../routes/pages';
 import './style.css';
-
-
-
-
 const Chart = require('chart.js');
-
 export default class Statistic extends Component {
   state = {
-    orderInfo: ''
+    tradesInfo: {
+      tradesInfo: []
+    }
   };
-
-  fetchUser = async () => {
+  fetchData = async () => {
     try {
-      const dataFromBase = await fetch(PAGES.API.fetchUser.path);
+      const dataFromBase = await fetch(PAGES.API.fetchData.path);
       this.setState({
-        orderInfo: await dataFromBase.json()
-      });
+        tradesInfo: await dataFromBase.json()
+      })
     } catch (e) {
       console.error(e);
     }
   };
-
   componentDidMount() {
-    this.fetchUser(() => {
-      const { orderInfo } = this.state;
-    });
-
-
-
+    this.fetchData();
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
       type: 'line',
@@ -182,13 +172,14 @@ export default class Statistic extends Component {
   }
 
   render() {
-    const { orderInfo } = this.state;
+    let { tradesInfo } = this.state.tradesInfo;
     return (
       <div>
         <div>
-          <ul>
-            {orderInfo.map((order) => <li key={order.number}>{order.openPrice}</li>)}
-          </ul>
+
+          {JSON.stringify(tradesInfo)}
+          {/* {tradesInfo.map(trade => <div key={trade.number}>{trade.number}</div>)} */}
+
         </div>
         <div id='grid'>
           <div>

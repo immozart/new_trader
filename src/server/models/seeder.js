@@ -24,15 +24,22 @@ async function seed() {
         if (i % 3 === 0) { tmpBUM = securitysArr[1]; securityFactor = 100; }
         if (i % 4 === 0) { tmpBUM = securitysArr[2]; securityFactor = 50; }
 
+        let openPrice = faker.random.number({ min: 95, max: 105 });
+        let closePrice = faker.random.number({ min: 95, max: 105 });
+        let capacity = faker.random.number({ min: -3, max: 3 });
+        capacity ? capacity = capacity : capacity = 1;
+
         const trade = await new Trades({
             user: 'traider',
             tradeData: faker.date.past(),
-            number: i+1,
+            number: i + 1,
             security: tmpBUM,
             factor: securityFactor,
-            openPrice: faker.random.number(100, 200),
-            closePrice: faker.random.number(100, 200),
-            signals: signalsArr
+            openPrice: openPrice,
+            closePrice: closePrice,
+            signals: signalsArr,
+            capacity: capacity,
+            result: (closePrice - openPrice) * securityFactor * capacity
         })
         await trade.save();
         console.log(i, trade)
