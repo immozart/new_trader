@@ -5,12 +5,13 @@ export default class Trades extends Component {
   state = {
     orderInfo: ''
   };
+  
   fetchUser = async () => {
     try {
       const dataFromBase = await fetch(PAGES.API.fetchUser.path);
       this.setState({
-        orderInfo: await dataFromBase.json()     
-      })    
+        orderInfo: await dataFromBase.json()
+      })
     } catch (e) {
       console.error(e);
     }
@@ -18,8 +19,9 @@ export default class Trades extends Component {
   componentDidMount() {
     this.fetchUser();
   }
+
   render() {
-    let { orderInfo } = this.state;  
+    let { orderInfo } = this.state;
     return (
       <div>
         <h2>СДЕЛКИ</h2>
