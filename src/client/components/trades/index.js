@@ -5,7 +5,7 @@ export default class Trades extends Component {
   state = {
     orderInfo: ''
   };
-  
+
   fetchUser = async () => {
     try {
       const dataFromBase = await fetch(PAGES.API.fetchUser.path);

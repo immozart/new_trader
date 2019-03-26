@@ -3,6 +3,8 @@ import { PAGES } from '../../routes/pages';
 import './style.css';
 
 
+
+
 const Chart = require('chart.js');
 
 export default class Statistic extends Component {
