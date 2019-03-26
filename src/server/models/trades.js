@@ -9,7 +9,9 @@ const tradesSchema = new mongoose.Schema({
     factor: Number,
     openPrice: Number,
     closePrice: Number,
-    signals: Array
+    signals: Array,
+    capacity: Number,
+    result: Number
 
 });
 
