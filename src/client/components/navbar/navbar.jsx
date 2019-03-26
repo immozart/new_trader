@@ -6,7 +6,7 @@ import './navbar.css';
 class NavBar extends Component {
 
   state = {
-    user: ''
+    user: '1'
   };
 
   async componentDidMount() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PAGES } from '../../routes/pages';
+
 export default class Trades extends Component {
   state = {
     orderInfo: ''
