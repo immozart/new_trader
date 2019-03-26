@@ -31,9 +31,9 @@ export const setCurrentUserAC = decoded => ({
   payload: decoded
 });
 
-export const loginUserAC = userData => dispatch => () => {
+export const loginUserAC = userData => (dispatch) => {
   axios
-    .post('http://localhost:3000/api/registration', userData)
+    .post('http://localhost:3000/api/login', userData)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
