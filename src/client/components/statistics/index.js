@@ -24,7 +24,12 @@ export default class Statistic extends Component {
   };
 
   componentDidMount() {
-    this.fetchUser();
+    this.fetchUser(() => {
+      const { orderInfo } = this.state;
+    });
+
+
+
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
       type: 'line',
@@ -180,11 +185,14 @@ export default class Statistic extends Component {
     const { orderInfo } = this.state;
     return (
       <div>
-<div>
-  {/* {orderInfo} */}
-</div>
+        <div>
+          <ul>
+            {orderInfo.map((order) => <li key={order.number}>{order.openPrice}</li>)}
+          </ul>
+        </div>
         <div id='grid'>
           <div>
+
             <canvas className='canvasChart' id="myChart" width="100" height="100"></canvas>
           </div>
           <div>
