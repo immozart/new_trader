@@ -5,8 +5,6 @@ import { Redirect } from 'react-router-dom';
 
 class Dashboard extends Component {
   render() {
-    console.log('dashboard props is', this.props.auth.user);
-
     return (
       <div>
         {!this.props.auth.isAuthenticated && <Redirect to='/' />}

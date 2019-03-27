@@ -41,16 +41,9 @@ export const loginUserAC = userData => (dispatch) => {
 };
 
 export const logoutUserAC = () => (dispatch) => {
+  axios.post('http://localhost:3000/api');
   dispatch({
     type: APP_TYPES.USER_LOADING,
     payload: {}
   });
-  // axios
-  //   .post('http://localhost:3000/api')
-  //   .then(() => {
-  //     dispatch({
-  //       type: APP_TYPES.USER_LOADING,
-  //       payload: {}
-  //     });
-  //   });
 };
