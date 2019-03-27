@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Type from 'prop-types';
-import { Link } from 'react-router-dom';
-import { PAGES } from '../../routes/pages';
 import { bemClassNameFactory } from '../../utils/bem';
 import NavBar from '../navbar/navbar';
 import './app.css';

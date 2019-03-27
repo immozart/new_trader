@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUserAC } from '../../redux/actions/auth-actions';
 import './login.css';
 
 class Login extends Component {
@@ -9,47 +11,31 @@ class Login extends Component {
     errors: {}
   };
 
-  getEmail = (e) => {
-    this.setState({
-      email: e.target.value
-    });
-  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard'); // push user to dashboard when they login
+    }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
 
-  getPassword = (e) => {
+  onChange = (e) => {
     this.setState({
-      password: e.target.value
+      [e.target.id]: e.target.value
     });
-  };
+  }
 
-  submit = async (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
-    const { data } = await axios.post('http://localhost:3000/api/login',
-      {
-        email: this.state.email,
-        password: this.state.password
-      },
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json'
-        }
-      });
 
-    if (data.errors) {
-      this.setState({
-        errors: {
-          email: data.errors.email,
-          password: data.errors.password
-        }
-      });
-    }
-
-    if (data.success) {
-      this.setState({
-        errors: {}
-      });
-      this.props.history.push('/');
-    }
+    const userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.loginUserAC(userData);
   }
 
 
@@ -66,7 +52,7 @@ class Login extends Component {
             <input type="email"
               className={email ? 'form-control is-invalid' : 'form-control'} id="email"
               placeholder="например, rauf.erk@gmail.com"
-              onChange={this.getEmail} value={this.state.email} />
+              onChange={this.onChange} value={this.state.email} />
             {<div className="invalid-feedback">{email}</div>}
           </div>
 
@@ -75,15 +61,26 @@ class Login extends Component {
             <input type="password"
               className={password ? 'form-control is-invalid' : 'form-control'} id="password"
               placeholder="например, **********"
-              onChange={this.getPassword} value={this.state.password} />
+              onChange={this.onChange} value={this.state.password} />
             {<div className="invalid-feedback">{password}</div>}
           </div>
 
-          <button type="submit" className="btn btn-primary" onClick={this.submit}>Войти</button>
+          <button type="submit" className="btn btn-primary" onClick={this.onSubmit}>Войти</button>
         </fieldset>
       </form>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUserAC: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { loginUserAC })(Login);

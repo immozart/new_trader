@@ -21,7 +21,7 @@ router.post('/registration', (req, res) => {
   const { errors, isValid } = validateRegistration(req.body);
 
   if (!isValid) {
-    return res.json(errors);
+    return res.status(400).json(errors);
   }
 
   const { firstName, email, password } = req.body;
@@ -29,7 +29,7 @@ router.post('/registration', (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        return res.json({ errors: { email: 'Пользователь с такой почтой уже существует в системе.' } });
+        return res.json({ email: 'Пользователь с такой почтой уже существует в системе.' });
       }
     });
 
@@ -52,18 +52,18 @@ router.post('/registration', (req, res) => {
 
 router.post('/login', (req, res) => {
   const { errors, isValid } = validateLogin(req.body);
-  console.log(errors);
 
   if (!isValid) {
-    return res.json(errors);
+    return res.status(400).json(errors);
   }
 
   const { email, password } = req.body;
 
   User.findOne({ email })
     .then((user) => {
+      console.log('user is', user)
       if (!user) {
-        return res.json({ errors: { email: 'Пользователь с такой почтой не найден в системе.' } });
+        return res.status(400).json({ email: 'Пользователь с такой почтой не найден в системе.' });
       }
 
       bcrypt.compare(password, user.password)
@@ -81,7 +81,7 @@ router.post('/login', (req, res) => {
               }
             );
           } else {
-            return res.json({ errors: { password: 'Вы ввели некорректный пароль' } });
+            return res.status(400).json({ password: 'Вы ввели некорректный пароль' });
           }
         });
     });
