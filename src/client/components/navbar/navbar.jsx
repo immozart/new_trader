@@ -37,7 +37,7 @@ class NavBar extends Component {
           </ul>}
 
         </div>
-
+        
         {!this.props.auth.isAuthenticated
           && <div>
             <Link to="/login">
@@ -54,7 +54,7 @@ class NavBar extends Component {
               <button className="btn btn-success enter" onClick={this.onLogout}>Выйти</button>
             </Link>
           </div>}
-
+        
       </nav>
     );
   }
