@@ -4,6 +4,7 @@ import path from 'path';
 import proxy from 'http-proxy-middleware';
 import handlebars from 'handlebars';
 import bodyParser from 'body-parser';
+import session from 'express-session';
 import config from './config/default';
 import router from './router';
 import authRouter from './auth-router';
@@ -23,6 +24,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+app.use(session({
+  // store: new RedisStore({
+  //   client,
+  //   host: 'localhost',
+  //   port: 6379,
+  //   ttl :  260
+  // }),
+  key: 'user_sid',
+  secret: 'anything here',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: 600000
+  }
+}));
+
 
 app.use(passport.initialize());
 require('./config/passport')(passport);
