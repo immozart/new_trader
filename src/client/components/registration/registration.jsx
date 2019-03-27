@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import classnames from 'classnames';
 import { registerUserAC } from '../../redux/actions/auth-actions';
 import './registration.css';
 
@@ -16,55 +14,29 @@ class Registration extends Component {
     errors: {}
   };
 
-  getFirstName = (e) => {
-    this.setState({
-      firstName: e.target.value
-    });
-  };
-
-  getEmail = (e) => {
-    this.setState({
-      email: e.target.value
-    });
-  };
-
-  getPassword = (e) => {
-    this.setState({
-      password: e.target.value
-    });
-  };
-
-  submit = async (e) => {
-    e.preventDefault();
-
-    const { firstName, email, password } = this.state;
-
-    const { data } = await axios.post('http://localhost:3000/api/registration',
-      {
-        firstName,
-        email,
-        password
-      }, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json'
-        }
-      });
-
-    if (data.errors) {
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.errors) {
       this.setState({
-        errors: {
-          firstName: data.errors.firstName,
-          email: data.errors.email,
-          password: data.errors.password
-        }
+        errors: nextProps.errors
       });
     }
+  }
 
-    // eslint-disable-next-line no-underscore-dangle
-    if (data._id) {
-      this.props.history.push('/');
-    }
+  onChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    const newUser = {
+      firstName: this.state.firstName,
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.registerUserAC(newUser, this.props.history);
   };
 
 
@@ -82,7 +54,7 @@ class Registration extends Component {
             <input type="text"
               className={firstName ? 'form-control is-invalid' : 'form-control'} id="firstName"
               placeholder="например, Рауф Эрк"
-              onChange={this.getFirstName} value={this.state.firstName} />
+              onChange={this.onChange} value={this.state.firstName} />
             {<div className="invalid-feedback">{firstName}</div>}
           </div>
 
@@ -91,7 +63,7 @@ class Registration extends Component {
             <input type="email"
               className={email ? 'form-control is-invalid' : 'form-control'} id="email"
               placeholder="например, rauf.erk@gmail.com"
-              onChange={this.getEmail} value={this.state.email} />
+              onChange={this.onChange} value={this.state.email} />
             {<div className="invalid-feedback">{email}</div>}
           </div>
 
@@ -100,17 +72,23 @@ class Registration extends Component {
             <input type="password"
               className={password ? 'form-control is-invalid' : 'form-control'} id="password"
               placeholder="например, **********"
-              onChange={this.getPassword} value={this.state.password} />
+              onChange={this.onChange} value={this.state.password} />
             {<div className="invalid-feedback">{password}</div>}
           </div>
           <button type="submit" className="btn btn-primary"
-            onClick={this.submit}>Создать новый аккаунт
+            onClick={this.onSubmit}>Создать новый аккаунт
           </button>
         </fieldset>
       </form>
     );
   }
 }
+
+Registration.propTypes = {
+  registerUserAC: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
 const mapStatetoProps = state => ({
   auth: state.auth,
