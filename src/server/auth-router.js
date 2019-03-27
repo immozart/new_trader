@@ -16,6 +16,15 @@ const User = require('./models/users');
 const validateRegistration = require('./validation/register');
 const validateLogin = require('./validation/login');
 
+router.get('/', (req, res) => {
+  res.json({ session: req.session.user });
+});
+
+router.post('/', (req, res) => {
+  req.session.destroy();
+  res.status(200);
+});
+
 
 router.post('/registration', (req, res) => {
   const { errors, isValid } = validateRegistration(req.body);
@@ -29,7 +38,7 @@ router.post('/registration', (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        return res.json({ email: 'Пользователь с такой почтой уже существует в системе.' });
+        return res.status(400).json({ email: 'Пользователь с такой почтой уже существует в системе.' });
       }
     });
 
@@ -45,7 +54,10 @@ router.post('/registration', (req, res) => {
     newUser.password = hash;
     newUser
       .save()
-      .then(user => res.json(user))
+      .then((user) => {
+        req.session.user = user;
+        res.json(user);
+      })
       .catch(err => console.log(err));
   });
 });
@@ -61,7 +73,6 @@ router.post('/login', (req, res) => {
 
   User.findOne({ email })
     .then((user) => {
-      console.log('user is', user)
       if (!user) {
         return res.status(400).json({ email: 'Пользователь с такой почтой не найден в системе.' });
       }
@@ -69,20 +80,11 @@ router.post('/login', (req, res) => {
       bcrypt.compare(password, user.password)
         .then((isMatch) => {
           if (isMatch) {
-            const payload = { id: user.id, firstName: user.firstName };
-            jwt.sign(
-              payload,
-              keys.secretOrKey,
-              {
-                expiresIn: 31556926
-              },
-              (err, token) => {
-                res.json({ success: true, token: `Bearer${token}` });
-              }
-            );
-          } else {
-            return res.status(400).json({ password: 'Вы ввели некорректный пароль' });
+            req.session.user = user;
+            console.log(req.session.user);
+            return res.json(user);
           }
+          return res.status(400).json({ password: 'Вы ввели некорректный пароль' });
         });
     });
 });
