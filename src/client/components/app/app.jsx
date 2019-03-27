@@ -19,33 +19,34 @@ export default class App extends Component {
     appName: 'Default Name'
   };
 
+  state = {
+    session: {}
+  }
+
   getSession = async () => {
     const { data } = await axios.get('http://localhost:3000/api/');
-    return data.session;
+    this.setState({
+      session: data.session
+    });
+  }
+
+  componentDidMount() {
+    this.getSession();
   }
 
   render() {
-    if (this.getSession() === undefined) {
-      console.log(this.getSession())
-      return (
-        <div>
-          привет!
-        </div>
-      );
-    }
     const {
       children
     } = this.props;
     return (
-
-      <div className={cn()}>
+      <div className={cn()} >
         <div className={cn('header')}>
           {<NavBar />}
         </div>
         {children}
         <div className={cn('footer')}>
         </div>
-      </div>
+      </div >
     );
   }
 }
