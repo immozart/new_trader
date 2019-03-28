@@ -2,14 +2,9 @@
 const express = require('express');
 
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const saltRounds = 10;
-const keys = {
-  mongoURI: 'YOUR_MONGOURI_HERE',
-  secretOrKey: 'secret'
-};
 
 const User = require('./models/users');
 
@@ -25,6 +20,27 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   req.session.destroy();
+  res.status(200);
+});
+
+router.post('/settings', async (req, res) => {
+  const { email } = req.body;
+  const data = await User.findOne({ email });
+  const { signals, securities } = data;
+  res.json({ signals, securities });
+});
+
+router.post('/addsignals', async (req, res) => {
+  const { email, signals } = req.body;
+  const data = await User.findOneAndUpdate({ email }, { signals });
+  console.log(data)
+  res.status(200);
+});
+
+router.post('/delsignals', async (req, res) => {
+  const { email, signals } = req.body;
+  const data = await User.findOneAndUpdate({ email }, { signals });
+  console.log(data)
   res.status(200);
 });
 

@@ -1,130 +1,105 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import AppHeader from './app-header';
-import SearchPanel from './search-panel';
-import TodoList from './todo-list';
-import TodoItemFilter from './todo-item-filter';
-import ItemAddForm from './item-add-form';
+import Signals from './todo-list/signals';
+import Securities from './todo-list/securities';
+import SignalAddForm from './item-add-form/signal-add-form';
+import SecurityAddForm from './item-add-form/security-add-form';
 import './settings.css';
 
 class Settings extends Component {
+  maxIdSig = 100;
 
-  maxId = 100;
+  maxIdSec = 100;
 
-  createNewItem(label) {
+  createNewSignal(signalLabel) {
     return {
-      label, important: false, done: false, id: this.maxId++
-    }
-  };
+      signalLabel, id: this.maxIdSig++
+    };
+  }
+
+  createNewSecurity(signalSecurity) {
+    return {
+      signalSecurity, id: this.maxIdSec++
+    };
+  }
 
   state = {
-    todoData: [
-      this.createNewItem('Make Coffee', 1),
-      this.createNewItem('Build App', 2),
-      this.createNewItem('Drink Whisky', 3)
-    ],
-    term: ''
+    signals: [],
+    securities: [],
+    signal: '',
+    security: ''
   };
 
-  deleteItem = (id) => {
-    this.setState(({ todoData }) => {
-      const idx = todoData.findIndex((el) => el.id === id);
+  deleteSignal = (id) => {
+    this.setState(({ signals }) => {
+      const idx = signals.findIndex(el => el.id === id);
 
-      const before = todoData.slice(0, idx);
-      const after = todoData.slice(idx + 1);
+      const before = signals.slice(0, idx);
+      const after = signals.slice(idx + 1);
 
       return {
-        todoData: [...before, ...after]
+        signals: [...before, ...after]
       };
     });
   };
 
-  addItem = (text) => {
-    const newItem = this.createNewItem(text);
+  deleteSecurity = (id) => {
+    this.setState(({ securities }) => {
+      const idx = securities.findIndex(el => el.id === id);
 
-    this.setState(({ todoData }) => {
-      const newArr = [...todoData, newItem];
+      const before = securities.slice(0, idx);
+      const after = securities.slice(idx + 1);
 
       return {
-        todoData: newArr
-      }
+        securities: [...before, ...after]
+      };
     });
   };
 
-  toggleProperties(arr, id, propName) {
-    const idx = arr.findIndex((el) => el.id === id);
+  addSignal = (text) => {
+    const newItem = this.createNewSignal(text);
 
-    const oldItem = arr[idx];
-    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
-
-    return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
-  }
-
-
-  onToggleDone = (id) => {
-
-    this.setState(({ todoData }) => {
+    this.setState(({ signals }) => {
+      const newArr = [...signals, newItem];
 
       return {
-        todoData: this.toggleProperties(todoData, id, 'done')
-      }
-    });
-
-  };
-
-  onToggleImportant = (id) => {
-    this.setState(({ todoData }) => {
-      return {
-        todoData: this.toggleProperties(todoData, id, 'important')
-      }
+        signals: newArr
+      };
     });
   };
 
-  search(items, term) {
-    if (term.length === 0) {
-      return items;
-    }
-    return items.filter(item => item.label.indexOf(term) > -1)
-  }
+  addSecurity = (text) => {
+    const newItem = this.createNewSecurity(text);
 
-  onSearchPanel = (term) => {
-    this.setState({ term })
+    this.setState(({ securities }) => {
+      const newArr = [...securities, newItem];
+
+      return {
+        securities: newArr
+      };
+    });
   };
 
 
   render() {
-
-    const { isAuthenticated, user: { firstName, email } } = this.props.auth;
-
-    const { todoData, term } = this.state;
-
-    const visibleItems = this.search(todoData, term);
-
-    const doneCount = todoData.filter((el) => el.done).length;
-
-    const todoCount = todoData.length - doneCount;
-
-    return (<div>
-      {/* {!isAuthenticated && <Redirect to='/' />} */}
-      {isAuthenticated && <div>Привет, {firstName}!</div>}
-      <AppHeader todo={todoCount} done={doneCount} />
-      <SearchPanel onSearchPanel={this.onSearchPanel} />
-      <TodoItemFilter />
-      <TodoList
-        todoItems={visibleItems}
-        onDeleted={this.deleteItem}
-        onToggleImportant={this.onToggleImportant}
-        onToggleDone={this.onToggleDone} />
-      <ItemAddForm
-        addItem={this.addItem} />
-    </div>)
+    return (<div className="settings">
+      <div className="form-group">
+        <legend>Мои торговые сигналы</legend>
+        <Signals
+          signalItems={this.state.signals}
+          onDeletedSignal={this.deleteSignal} />
+        <SignalAddForm
+          addSignal={this.addSignal} />
+      </div>
+      <div className="form-group papers">
+      <legend>Мои торгуемые бумаги</legend>
+        <Securities
+          securityItems={this.state.securities}
+          onDeletedSecurity={this.deleteSecurity} />
+        <SecurityAddForm
+          addSecurity={this.addSecurity} />
+      </div>
+    </div>);
   }
 }
 
-
-const mapStatetoProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStatetoProps)(Settings);
+export default Settings;
