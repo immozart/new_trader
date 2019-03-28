@@ -14,7 +14,7 @@
 
 // import React from 'react';
 import React, { Component } from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Form , ButtonToolbar} from 'react-bootstrap';
 
 export default class Page404 extends Component {
   render() {
@@ -24,8 +24,8 @@ export default class Page404 extends Component {
           <Button variant="secondary">Left</Button>
           <Button variant="secondary">Middle</Button>
           <Button variant="secondary">Right</Button>
-        </ButtonGroup>;
-        {/* <ButtonToolbar>
+        </ButtonGroup>
+        <ButtonToolbar>
           <Button variant="outline-primary">Primary</Button>
           <Button variant="outline-secondary">Secondary</Button>
           <Button variant="outline-success">Success</Button>
@@ -34,7 +34,26 @@ export default class Page404 extends Component {
           <Button variant="outline-info">Info</Button>
           <Button variant="outline-light">Light</Button>
           <Button variant="outline-dark">Dark</Button>
-        </ButtonToolbar> */}
+        </ButtonToolbar>
+
+        {['checkbox', 'radio'].map(type => (
+          <div key={`custom-${type}`} className="mb-3">
+            <Form.Check
+              custom
+              type={type}
+              id={`custom-${type}`}
+              label={`Check this custom ${type}`}
+            />
+
+            <Form.Check
+              custom
+              disabled
+              type={type}
+              label={`disabled ${type}`}
+              id={`disabled-custom-${type}`}
+            />
+          </div>
+        ))}
       </div>
     );
   }
