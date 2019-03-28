@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import AppHeader from './app-header';
 import SearchPanel from './search-panel';
 import TodoList from './todo-list';
@@ -26,7 +28,7 @@ class Settings extends Component {
   };
 
   deleteItem = (id) => {
-    this.setState(({todoData}) => {
+    this.setState(({ todoData }) => {
       const idx = todoData.findIndex((el) => el.id === id);
 
       const before = todoData.slice(0, idx);
@@ -41,7 +43,7 @@ class Settings extends Component {
   addItem = (text) => {
     const newItem = this.createNewItem(text);
 
-    this.setState(({todoData}) => {
+    this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
 
       return {
@@ -54,7 +56,7 @@ class Settings extends Component {
     const idx = arr.findIndex((el) => el.id === id);
 
     const oldItem = arr[idx];
-    const newItem = {...oldItem, [propName]: !oldItem[propName]};
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
 
     return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
   }
@@ -62,7 +64,7 @@ class Settings extends Component {
 
   onToggleDone = (id) => {
 
-    this.setState(({todoData}) => {
+    this.setState(({ todoData }) => {
 
       return {
         todoData: this.toggleProperties(todoData, id, 'done')
@@ -72,7 +74,7 @@ class Settings extends Component {
   };
 
   onToggleImportant = (id) => {
-    this.setState(({todoData}) => {
+    this.setState(({ todoData }) => {
       return {
         todoData: this.toggleProperties(todoData, id, 'important')
       }
@@ -87,13 +89,15 @@ class Settings extends Component {
   }
 
   onSearchPanel = (term) => {
-    this.setState({term})
+    this.setState({ term })
   };
 
 
   render() {
 
-    const {todoData, term} = this.state;
+    const { isAuthenticated, user: { firstName, email } } = this.props.auth;
+
+    const { todoData, term } = this.state;
 
     const visibleItems = this.search(todoData, term);
 
@@ -102,19 +106,25 @@ class Settings extends Component {
     const todoCount = todoData.length - doneCount;
 
     return (<div>
-      <AppHeader todo={todoCount} done={doneCount}/>
-      <SearchPanel onSearchPanel={this.onSearchPanel}/>
-      <TodoItemFilter/>
+      {/* {!isAuthenticated && <Redirect to='/' />} */}
+      {isAuthenticated && <div>Привет, {firstName}!</div>}
+      <AppHeader todo={todoCount} done={doneCount} />
+      <SearchPanel onSearchPanel={this.onSearchPanel} />
+      <TodoItemFilter />
       <TodoList
         todoItems={visibleItems}
         onDeleted={this.deleteItem}
         onToggleImportant={this.onToggleImportant}
-        onToggleDone={this.onToggleDone}/>
+        onToggleDone={this.onToggleDone} />
       <ItemAddForm
-        addItem={this.addItem}/>
+        addItem={this.addItem} />
     </div>)
   }
 }
 
 
-export default Settings;
+const mapStatetoProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStatetoProps)(Settings);
