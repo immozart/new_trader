@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './home-page.css';
 
 const HomePage = () => (
   <div className="jumbotron home-page">

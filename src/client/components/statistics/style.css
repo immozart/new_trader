@@ -3,10 +3,13 @@
     grid-auto-rows: minmax(100px, auto);
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2vw;
+    
     }
 #grid > div {
     font-size: 5vw;
     padding: .5em;
     /* background: rgb(116, 115, 161); */
     text-align: center;
+    float: left;
   }
+
