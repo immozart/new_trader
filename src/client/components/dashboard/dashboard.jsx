@@ -14,9 +14,9 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  auth: PropTypes.object.isRequired
-};
+// Dashboard.propTypes = {
+//   auth: PropTypes.object.isRequired
+// };
 
 const mapStateToProps = state => ({
   auth: state.auth
