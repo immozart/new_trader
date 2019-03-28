@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUserAC } from '../../redux/actions/auth-actions';
@@ -13,7 +14,7 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard'); // push user to dashboard when they login
+      this.props.history.push('/dashboard');
     }
     if (nextProps.errors) {
       this.setState({
@@ -30,12 +31,11 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.loginUserAC(userData);
+    this.props.loginUserAC(userData, this.props.history);
   }
 
 
@@ -83,4 +83,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUserAC })(Login);
+export default connect(mapStateToProps, { loginUserAC })(withRouter(Login));

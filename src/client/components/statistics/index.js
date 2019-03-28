@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { PAGES } from '../../routes/pages';
 import './style.css';
 
 const Chart = require('chart.js');
 
-export default class Statistic extends Component {
+class Statistic extends Component {
   state = {
     tradesInfo: {
       tradesInfo: []
@@ -382,11 +384,13 @@ export default class Statistic extends Component {
 
 
   render() {
+    const { isAuthenticated, user: { firstName, email } } = this.props.auth;
     const { tradesInfo } = this.state.tradesInfo;
     return (
       <div>
         <div>
-
+          {!isAuthenticated && <Redirect to='/' />}
+          {isAuthenticated && <div>Привет, {firstName}!</div>}
           {/* {JSON.stringify(tradesInfo)} */}
           {/* {tradesInfo.map(trade => <div key={trade.number}>{trade.number}</div>)} */}
 
@@ -415,5 +419,8 @@ export default class Statistic extends Component {
   }
 }
 
+const mapStatetoProps = state => ({
+  auth: state.auth
+});
 
-
+export default connect(mapStatetoProps)(Statistic);

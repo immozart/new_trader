@@ -40,17 +40,17 @@ class NavBar extends Component {
         {!this.props.auth.isAuthenticated
           && <div>
             <Link to="/login">
-              <button className="btn btn-secondary">Войти</button>
+              <button className="btn btn-danger">Войти</button>
             </Link>
             <Link to="/registration">
-              <button className="btn btn-success enter">Зарегистрироваться</button>
+              <button className="btn btn-warning enter">Зарегистрироваться</button>
             </Link>
           </div>}
 
         {this.props.auth.isAuthenticated
           && <div>
             <Link to="/">
-              <button className="btn btn-success enter" onClick={this.onLogout}>Выйти</button>
+              <button className="btn btn-warning enter" onClick={this.onLogout}>Выйти</button>
             </Link>
           </div>}
         

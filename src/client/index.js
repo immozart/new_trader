@@ -14,19 +14,14 @@ import reducers from './redux/reducers';
 import Routes from './routes/routes';
 import rootSaga from './redux/sagas';
 
+
 const history = createBrowserHistory();
 const composeEnhancers = composeWithDevTools({});
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-const initialState = {
-  app: {
-    name: 'Express React Skeleton',
-    say: 'nothing for now'
-  },
-  auth: {}
-};
+const initialState = {};
 
 const store = createStore(
   reducers(history),

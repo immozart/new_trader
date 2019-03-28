@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { logoutUserAC } from '../../redux/actions/auth-actions';
+import { Redirect } from 'react-router-dom';
 
 class Dashboard extends Component {
-  onLogout = (e) => {
-    e.preventDefault();
-    this.props.logoutUserAC();
-  }
-
   render() {
-    // const { user } = this.props.auth;
-
     return (
-      <div>привет!</div>
+      <div>
+        {!this.props.auth.isAuthenticated && <Redirect to='/' />}
+        {this.props.auth.isAuthenticated && <div>Привет, {this.props.auth.user.firstName}!</div>}
+      </div>
     );
   }
 }
 
-Dashboard.propTypes = {
-  logoutUserAC: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
-};
+// Dashboard.propTypes = {
+//   auth: PropTypes.object.isRequired
+// };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUserAC })(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
