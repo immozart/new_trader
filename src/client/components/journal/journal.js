@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { PAGES } from '../../routes/pages';
 import icon from '../../public/images/checkmark-16.png';
 import './journal.css'
+import Button from 'react-bootstrap/Button';
+
 export default class Journal extends Component {
     state = {
         tradesInfo: {
@@ -45,59 +47,54 @@ export default class Journal extends Component {
     });
     ParseDate = (dateTimeFromMongo) => {
         let tmpData = new Date(dateTimeFromMongo);
-        return (
-            tmpData.toLocaleString()
+        return (tmpData.toLocaleString()
         );
     };
     render() {
         let { tradesInfo } = this.state.tradesInfo;
         let keyIndex = 0;
+        let maxTradeNumber = tradesInfo.length;
         return (
-            <div >
-
+            <div className="center">
                 <h3><b><i>СДЕЛКИ</i></b></h3>
-                <form>
-                    <div className="form-row">
-                        <div className="col">
-                            <input type="text" className="form-control form-number" placeholder="номер" readOnly />
-                        </div>
-                        <div className="col-2 boxes-data">
-                            <input type="text" className="form-control boxes-data" placeholder="дата и время открытия" />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="актив" />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="лот" />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="цена открытия" />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="цена закытия" />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="итог" />
-                        </div>
-                        {this.RenderChekboxes}
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-                <table className="table table-bordered">
+                <table className="table table-bordered rounded">
                     <thead className="thead-dark">
                         <tr key={'table headernpm'} align='center'>
                             <th scope="col" className='header-number'>номер</th>
-                            <th scope="col" className='header-data'>дата и время открытия</th>
+                            <th scope="col" className='header-data'>время открытия</th>
                             <th scope="col">актив</th>
                             <th scope="col">лот</th>
                             <th scope="col">цена открытия</th>
-                            <th scope="col">цена закытия</th>
+                            <th scope="col">цена закрытия</th>
                             <th scope="col">итог</th>
                             {this.SignalHeader}
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr key={'main-table-row'} className='main-table-row'>
+                            <td>{++maxTradeNumber}</td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><button type='button' className='btn btn-success'>
+                                <i className='fa-handshake-o'/>
+                            </button></td>
+                        </tr>
+
                         {tradesInfo.map(trade =>
                             <tr key={trade.number} className='main-table-row'>
                                 <td>{trade.number}</td>
@@ -109,8 +106,8 @@ export default class Journal extends Component {
                                 <td >{trade.result}</td>
                                 {trade.signals.map(signal => <td key={keyIndex++} >{signal ? <img src={icon} alt="yes" /> : null}</td>)}
                                 <td scope="col" >
-                                    <button type='button' className='btn btn-danger btn-sm'>
-                                        <i className='fa fa-trash-o' aria-hidden="true" />
+                                    <button type='button' className='btn btn-danger'>
+                                        <i className='fa fa-trash-o' />
                                     </button>
                                 </td>
                             </tr>

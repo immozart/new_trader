@@ -4,6 +4,7 @@ import { bemClassNameFactory } from '../../utils/bem';
 import NavBar from '../navbar/navbar';
 import './app.css';
 
+
 const cn = bemClassNameFactory('app');
 
 export default class App extends Component {

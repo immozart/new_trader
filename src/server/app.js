@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import config from './config/default';
 import router from './router';
 import authRouter from './auth-router';
+import Button from 'react-bootstrap/Button';
 
 const passport = require('passport');
 
