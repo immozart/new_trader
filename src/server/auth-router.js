@@ -17,7 +17,10 @@ const validateRegistration = require('./validation/register');
 const validateLogin = require('./validation/login');
 
 router.get('/', (req, res) => {
-  res.json({ session: req.session.user });
+  if (req.session.user) {
+    return res.status(200).json(req.session.user);
+  }
+  return res.status(400).json({ email: 'Сессии нет.' });
 });
 
 router.post('/', (req, res) => {
