@@ -130,7 +130,7 @@ export default class Statistic extends Component {
     signalsArr = signalsArr.sort(function (a, b) { return b - a })
     //   console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', signalsArr)
 
-   // securityObj = securityObj.sort(function (a, b) { return a.value - b.value })
+    // securityObj = securityObj.sort(function (a, b) { return a.value - b.value })
     console.log('ooooooooooooooooooooooooooo', securityObj)
 
 
@@ -181,12 +181,12 @@ export default class Statistic extends Component {
           label: 'Capital',
           data: capital,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -204,7 +204,16 @@ export default class Statistic extends Component {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
             }
           }]
         }
@@ -217,15 +226,15 @@ export default class Statistic extends Component {
       data: {
         labels: ['Unprofitable', 'Profitable'],
         datasets: [{
-          label: '# of Votes',
+          label: 'Profit',
           data: profit,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -243,7 +252,16 @@ export default class Statistic extends Component {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
             }
           }]
         }
@@ -258,16 +276,16 @@ export default class Statistic extends Component {
           label: 'Signals',
           data: signalsArr,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -289,7 +307,16 @@ export default class Statistic extends Component {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
             }
           }]
         }
@@ -301,15 +328,21 @@ export default class Statistic extends Component {
       data: {
         labels: SecurityLabel,
         datasets: [{
-          label: 'Security',
+          label: 'Stocks',
+          //   font: {
+          //     family: 'Courier'
+          //   },
+          //   fontsize: '50'
+          // },
+
           data: securityProfit,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -327,7 +360,16 @@ export default class Statistic extends Component {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontSize: 20,
+              fontColor: '#FFFFFF'
             }
           }]
         }
@@ -350,18 +392,21 @@ export default class Statistic extends Component {
 
         </div>
         <div id='grid'>
-          <div>
-
-            <canvas className='canvasChart' id="myChart" width="500" height="500"></canvas>
+          <div className="gridDiv">
+            <label>Capital</label>
+            <canvas className='canvasChart' id="myChart" width="700" height="700"></canvas>
           </div>
           <div>
-            <canvas className='canvasChart' id="myChart2" width="500" height="500"></canvas>
+          <label>Profit</label>
+            <canvas className='canvasChart' id="myChart2" width="700" height="700"></canvas>
           </div>
           <div>
-            <canvas className='canvasChart' id="myChart3" width="500" height="500"></canvas>
+          <label>Signals</label>
+            <canvas className='canvasChart' id="myChart3" width="700" height="700"></canvas>
           </div>
           <div>
-            <canvas className='canvasChart' id="myChart4" width="500" height="500"></canvas>
+          <label>Stocks</label>
+            <canvas className='canvasChart' id="myChart4" width="700" height="700"></canvas>
           </div>
         </div>
 

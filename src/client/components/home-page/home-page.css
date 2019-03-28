@@ -9,3 +9,11 @@
   margin-top: 170px;
   padding: 1em;
 } */
+
+body{
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(kyle-hanson-1351122-unsplash.jpg);
+  background-size: 100% auto;
+  align-content: center;
+  padding: 50px;
+  color: white;
+}
