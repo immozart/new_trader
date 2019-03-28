@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Signals from './todo-list/signals';
 import Securities from './todo-list/securities';
 import SignalAddForm from './item-add-form/signal-add-form';
@@ -16,9 +17,9 @@ class Settings extends Component {
     };
   }
 
-  createNewSecurity(signalSecurity) {
+  createNewSecurity(securityLabel) {
     return {
-      signalSecurity, id: this.maxIdSec++
+      securityLabel, id: this.maxIdSec++
     };
   }
 
@@ -29,56 +30,65 @@ class Settings extends Component {
     security: ''
   };
 
-  deleteSignal = (id) => {
-    this.setState(({ signals }) => {
-      const idx = signals.findIndex(el => el.id === id);
-
-      const before = signals.slice(0, idx);
-      const after = signals.slice(idx + 1);
-
-      return {
-        signals: [...before, ...after]
-      };
+  getInfo = async () => {
+    const { data } = await axios.post('http://localhost:3000/api/settings',
+      { email: 'rauf.erk@gmail.com' });
+    const { signals, securities } = data;
+    this.setState({
+      signals,
+      securities
     });
-  };
+  }
 
-  deleteSecurity = (id) => {
-    this.setState(({ securities }) => {
-      const idx = securities.findIndex(el => el.id === id);
+  componentDidMount() {
+    this.getInfo();
+  }
 
-      const before = securities.slice(0, idx);
-      const after = securities.slice(idx + 1);
-
-      return {
-        securities: [...before, ...after]
-      };
+  deleteSignal = async (id) => {
+    const { signals } = this.state;
+    const idx = signals.findIndex(el => el.id === id);
+    const before = signals.slice(0, idx);
+    const after = signals.slice(idx + 1);
+    this.setState({
+      signals: [...before, ...after]
     });
-  };
+    await axios.post('http://localhost:3000/api/upgrade_signals',
+      { email: 'rauf.erk@gmail.com', signals: [...before, ...after] });
+  }
 
-  addSignal = (text) => {
+  deleteSecurity = async (id) => {
+    const { securities } = this.state;
+    const idx = securities.findIndex(el => el.id === id);
+    const before = securities.slice(0, idx);
+    const after = securities.slice(idx + 1);
+    this.setState({
+      securities: [...before, ...after]
+    });
+    await axios.post('http://localhost:3000/api/upgrade_securities',
+      { email: 'rauf.erk@gmail.com', securities: [...before, ...after] });
+  }
+
+  addSignal = async (text) => {
     const newItem = this.createNewSignal(text);
-
-    this.setState(({ signals }) => {
-      const newArr = [...signals, newItem];
-
-      return {
-        signals: newArr
-      };
+    const { signals } = this.state;
+    const newArr = [...signals, newItem];
+    this.setState({
+      signals: newArr
     });
+    await axios.post('http://localhost:3000/api/upgrade_signals',
+      { email: 'rauf.erk@gmail.com', signals: newArr });
   };
 
-  addSecurity = (text) => {
+  addSecurity = async (text) => {
     const newItem = this.createNewSecurity(text);
-
-    this.setState(({ securities }) => {
-      const newArr = [...securities, newItem];
-
-      return {
-        securities: newArr
-      };
+    const { securities } = this.state;
+    const newArr = [...securities, newItem];
+    this.setState({
+      securities: newArr
     });
+    await axios.post('http://localhost:3000/api/upgrade_securities',
+      { email: 'rauf.erk@gmail.com', securities: newArr });
   };
-
 
   render() {
     return (<div className="settings">
@@ -91,7 +101,7 @@ class Settings extends Component {
           addSignal={this.addSignal} />
       </div>
       <div className="form-group papers">
-      <legend>Мои торгуемые бумаги</legend>
+        <legend>Мои торгуемые бумаги</legend>
         <Securities
           securityItems={this.state.securities}
           onDeletedSecurity={this.deleteSecurity} />

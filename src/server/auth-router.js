@@ -30,17 +30,15 @@ router.post('/settings', async (req, res) => {
   res.json({ signals, securities });
 });
 
-router.post('/addsignals', async (req, res) => {
+router.post('/upgrade_signals', async (req, res) => {
   const { email, signals } = req.body;
-  const data = await User.findOneAndUpdate({ email }, { signals });
-  console.log(data)
+  await User.findOneAndUpdate({ email }, { signals });
   res.status(200);
 });
 
-router.post('/delsignals', async (req, res) => {
-  const { email, signals } = req.body;
-  const data = await User.findOneAndUpdate({ email }, { signals });
-  console.log(data)
+router.post('/upgrade_securities', async (req, res) => {
+  const { email, securities } = req.body;
+  await User.findOneAndUpdate({ email }, { securities });
   res.status(200);
 });
 
