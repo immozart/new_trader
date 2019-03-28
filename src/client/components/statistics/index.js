@@ -208,14 +208,14 @@ class Statistic extends Component {
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }],
           xAxes: [{
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }]
         }
@@ -256,14 +256,14 @@ class Statistic extends Component {
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }],
           xAxes: [{
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }]
         }
@@ -311,14 +311,14 @@ class Statistic extends Component {
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }],
           xAxes: [{
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }]
         }
@@ -364,14 +364,14 @@ class Statistic extends Component {
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }],
           xAxes: [{
             ticks: {
               beginAtZero: true,
               fontSize: 20,
-              fontColor: '#FFFFFF'
+              fontColor: '#000000'
             }
           }]
         }
