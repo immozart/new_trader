@@ -1,0 +1,9 @@
+.settings {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.papers {
+  margin-left: 300px;
+}

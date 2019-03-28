@@ -1,24 +1,23 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './item-add-form.css';
 
-class ItemAddForm extends Component {
-
+class SecurityAddForm extends Component {
   state = {
-    label: ''
+    securityLabel: ''
   };
 
   onLabelChange = (e) => {
     this.setState({
-      label: e.target.value
-    })
+      securityLabel: e.target.value
+    });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.addItem(this.state.label);
+    this.props.addSecurity(this.state.securityLabel);
     this.setState({
-      label: ''
-    })
+      securityLabel: ''
+    });
   };
 
   render() {
@@ -26,14 +25,14 @@ class ItemAddForm extends Component {
       onSubmit={this.onSubmit}>
       <button
         onClick={() => this.onLabelChange}>
-        Add Item
+        Добавить
       </button>
       <input
         type="text"
         onChange={this.onLabelChange}
-      value={this.state.label}/>
-    </form>)
+      value={this.state.securityLabel}/>
+    </form>);
   }
 }
 
-export default ItemAddForm;
+export default SecurityAddForm;

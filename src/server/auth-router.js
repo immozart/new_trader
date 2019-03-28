@@ -2,14 +2,9 @@
 const express = require('express');
 
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const saltRounds = 10;
-const keys = {
-  mongoURI: 'YOUR_MONGOURI_HERE',
-  secretOrKey: 'secret'
-};
 
 const User = require('./models/users');
 
@@ -17,11 +12,33 @@ const validateRegistration = require('./validation/register');
 const validateLogin = require('./validation/login');
 
 router.get('/', (req, res) => {
-  res.json({ session: req.session.user });
+  if (req.session.user) {
+    return res.status(200).json(req.session.user);
+  }
+  return res.status(400).json({ email: 'Сессии нет.' });
 });
 
 router.post('/', (req, res) => {
   req.session.destroy();
+  res.status(200);
+});
+
+router.post('/settings', async (req, res) => {
+  const { email } = req.body;
+  const data = await User.findOne({ email });
+  const { signals, securities } = data;
+  res.json({ signals, securities });
+});
+
+router.post('/upgrade_signals', async (req, res) => {
+  const { email, signals } = req.body;
+  await User.findOneAndUpdate({ email }, { signals });
+  res.status(200);
+});
+
+router.post('/upgrade_securities', async (req, res) => {
+  const { email, securities } = req.body;
+  await User.findOneAndUpdate({ email }, { securities });
   res.status(200);
 });
 
