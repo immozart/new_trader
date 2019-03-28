@@ -21,8 +21,10 @@
 
 .main-table-row {
     text-align: center;
+    align-content: center;
     vertical-align: middle;
-    margin: 5px
+    margin: 0px;
+    
     
 
     /* width: 20px;

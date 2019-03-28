@@ -74,15 +74,15 @@ class Journal extends Component {
       let keyIndex = 0;
       let maxTradeNumber = tradesInfo.length;
       return (
-            <div className="center">
-                {/* {!isAuthenticated && <Redirect to='/' />} */}
-                {isAuthenticated && <div>Привет, {firstName}!</div>}
+            <div className="center">            
+                {/* {!isAuthenticated && <Redirect to='/' />} */}               
                 <h3><b><i>СДЕЛКИ</i></b></h3>
+                {isAuthenticated && <span>Привет, {firstName}!</span>}
                 <table className="table table-bordered rounded">
                     <thead className="thead-dark">
-                        <tr key={'table headernpm'} align='center'>
+                        <tr key={'table header'} align='center'>
                             <th scope="col" className='header-number'>номер</th>
-                            <th scope="col" className='header-data'>время открытия</th>
+                            <th scope="col" className='header-data'>дата время</th>
                             <th scope="col">актив</th>
                             <th scope="col">лот</th>
                             <th scope="col">цена открытия</th>
@@ -94,7 +94,6 @@ class Journal extends Component {
                     </thead>
                     <tbody>
                         <tr key={'main-table-row'} className='main-table-row'>
-
                             <td>{++maxTradeNumber}</td>
                             <td><input type="text" className="form-control" placeholder="время открытия" onChange={this.onLabelChange} /></td>
                             <td><input type="text" className="form-control" placeholder="актив" /></td>
