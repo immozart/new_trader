@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { PAGES } from '../../routes/pages';
 import icon from '../../public/images/checkmark-16.png';
 import './journal.css'
+
 import Button from 'react-bootstrap/Button';
 
+
+import { Redirect } from 'react-router-dom';
+
 export default class Journal extends Component {
+
     state = {
         tradesInfo: {
             tradesInfo: []

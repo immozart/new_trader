@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { registerUserAC } from '../../redux/actions/auth-actions';
+import { authUserAC } from '../../redux/actions/auth-actions';
 import './registration.css';
 
 
@@ -15,7 +15,12 @@ class Registration extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    if (nextProps.auth.isAuthenticated) {
+      this.setState({
+        errors: {}
+      });
+      this.props.history.push('/dashboard');
+    }
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -36,7 +41,7 @@ class Registration extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.registerUserAC(newUser, this.props.history);
+    this.props.authUserAC(newUser, this.props.history);
   };
 
 
@@ -85,7 +90,7 @@ class Registration extends Component {
 }
 
 Registration.propTypes = {
-  registerUserAC: PropTypes.func.isRequired,
+  authUserAC: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -95,4 +100,4 @@ const mapStatetoProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStatetoProps, { registerUserAC })(withRouter(Registration));
+export default connect(mapStatetoProps, { authUserAC })(withRouter(Registration));
