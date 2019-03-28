@@ -6,76 +6,94 @@ import { PAGES } from '../../routes/pages';
 import icon from '../../public/images/checkmark-16.png';
 import './journal.css'
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
-
-
+import moment from 'moment-timezone';
 class Journal extends Component {
     state = {
-      tradesInfo: {
-        tradesInfo: []
-      }
+        tradesInfo: { tradesInfo: [] },
+        newDateTime: null,
+        tradeSecurity: '',
+        moexFactor: 10,
+        tradeCapacity: 1,
+        tradeOpenPr: 0,
+        tradeClosePr: 0,
+        tradeResult: 0,
+        tradeSignals: []
     };
-
     fetchData = async () => {
-      try {
-        const dataFromBase = await fetch(PAGES.API.fetchData.path);
-        const tradesInfo = await dataFromBase.json();
-        tradesInfo.tradesInfo.sort((a, b) => b.number - a.number);
-        this.setState({
-          tradesInfo
-        });
-      } catch (e) {
-        console.error(e);
-      }
+        try {
+            const dataFromBase = await fetch(PAGES.API.fetchData.path);
+            const tradesInfo = await dataFromBase.json();
+            tradesInfo.tradesInfo.sort((a, b) => b.number - a.number);
+            this.setState({
+                tradesInfo
+            });
+        } catch (e) {
+            console.error(e);
+        }
     };
-
-    componentDidMount() {
-      console.log(this.props);
-      this.fetchData();
+    getDataFromMoex = async (argSecc) => {
+        try {
+            if (argSecc.length == 4) {
+                console.log('---------------------------------------------------------' + argSecc);
+                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/' + argSecc + '.json');
+                const moexJson = await dataFromMoex.json();
+                const parsedMoexJson = await JSON.parse(moexJson);
+                console.log(parsedMoexJson);
+                moexFactor = parsedMoexJson['securities']['data'][1][4];
+                console.log('---------------------------------------------------------' + moexFactor);
+                this.setState({
+                    moexFactor
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    componentDidMount() {       
+        this.fetchData();
     }
-
     signalNames = ['sig_1', 'sig_2', 'sig_3', 'sig_4', 'sig_5', 'sig_6', 'sig_7', 'sig_8', 'sig_9', 'sig_10'];
 
     SignalHeader = this.signalNames.map(item => (
         <th key={`SignalHeader${item}`} scope="col">{item}</th>
     ));
-
     RowOfCheckboxes = (keyForIndex) => {
-      for (let i = 0; i < 10; i++) {
-        return (
+        for (let i = 0; i < 10; i++) {
+            return (
                 <td scope="col">{keyForIndex}</td>
-        );
-      }
+            );
+        }
     };
-
     RenderChekboxes = this.signalNames.map(item => (
-        <div className="col" key={`Chekboxes${item}`} >
-            <input type="text" className="form-control" placeholder={item} />
-        </div>
+        <td key={`SignalBoxes${item}`} ><Form.Check custom type='checkbox' id={item} label='' /></td>
     ));
-
     ParseDate = (dateTimeFromMongo) => {
-      const tmpData = new Date(dateTimeFromMongo);
-      return (tmpData.toLocaleString()
-      );
+        const tmpData = new Date(dateTimeFromMongo);
+        moment.locale('ru');
+        return (moment(tmpData).format('L hh:mm:ss'))
     };
-    onLabelChange = (e) => {
-        this.setState({
-            label: e.target.value
-        });
+    onSecNameChange = (e,argId) => {
+        if (e) {
+            // this.getDataFromMoex(e.target.value);
+            console.log('-----------------------------------------')
+            console.log(argId)
+            console.log('-----------------------------------------')
+            this.setState({
+                newDateTime: e.target.value
+            });
+        }
     };
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.props.onItemAdded(this.state.label);
-        this.setState({ label: '' })
+    GetDateTimeOnLine() {
+        return moment().format('L hh:mm:ss')
     }
     render() {
-      const { isAuthenticated, user: { firstName, email } } = this.props.auth;
-      const { tradesInfo } = this.state.tradesInfo;
-      let keyIndex = 0;
-      let maxTradeNumber = tradesInfo.length;
-      return (
-            <div className="center">            
-                {/* {!isAuthenticated && <Redirect to='/' />} */}               
+        const { isAuthenticated, user: { firstName, email } } = this.props.auth;
+        const { tradesInfo: { tradesInfo }, newDateTime, moexFactor } = this.state;
+        let keyIndex = 0;
+        let maxTradeNumber = tradesInfo.length;
+        return (
+            <div className="center">
+                {/* {!isAuthenticated && <Redirect to='/' />} */}
                 <h3><b><i>СДЕЛКИ</i></b></h3>
                 {isAuthenticated && <span>Привет, {firstName}!</span>}
                 <table className="table table-bordered rounded">
@@ -85,6 +103,7 @@ class Journal extends Component {
                             <th scope="col" className='header-data'>дата время</th>
                             <th scope="col">актив</th>
                             <th scope="col">лот</th>
+                            <th scope="col">кол-во</th>
                             <th scope="col">цена открытия</th>
                             <th scope="col">цена закрытия</th>
                             <th scope="col">итог</th>
@@ -95,32 +114,24 @@ class Journal extends Component {
                     <tbody>
                         <tr key={'main-table-row'} className='main-table-row'>
                             <td>{++maxTradeNumber}</td>
-                            <td><input type="text" className="form-control" placeholder="время открытия" onChange={this.onLabelChange} /></td>
-                            <td><input type="text" className="form-control" placeholder="актив" /></td>
-                            <td><input type="text" className="form-control" placeholder="лот" /></td>
-                            <td><input type="text" className="form-control" placeholder="цена открытия" /></td>
-                            <td><input type="text" className="form-control" placeholder="цена закрытия" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox1' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox2' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox3' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox4' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox5' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox6' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox7' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox8' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox9' label='' /></td>
-                            <td><Form.Check custom type='checkbox' id='custom-checkbox10' label='' /></td>
+                            <td>{this.GetDateTimeOnLine()}</td>
+                            <td><input type="text" className="form-control" placeholder="актив" id='tradeSecurity' onChange={this.onSecNameChange} /></td>
+                            <td>{moexFactor}</td>
+                            <td><input type="number" className="form-control" value='0' onChange={this.onSecNameChange} /></td>
+                            <td><input type="number" className="form-control" placeholder="цена открытия" /></td>
+                            <td><input type="number" className="form-control" placeholder="цена закрытия" /></td>
+                            <td>0123456</td>
+                            {this.RenderChekboxes}
                             <td><button type='button' className='btn btn-success'>
                                 <i className='fa-handshake-o' />
                             </button></td>
                         </tr>
-
                         {tradesInfo.map(trade => <tr key={trade.number} className='main-table-row'>
                             <td>{trade.number}</td>
                             <td >{this.ParseDate(trade.tradeData)}</td>
                             <td >{trade.security}</td>
                             <td >{trade.factor}</td>
+                            <td >{trade.capacity}</td>
                             <td >{trade.openPrice}</td>
                             <td >{trade.closePrice}</td>
                             <td >{trade.result}</td>
@@ -134,12 +145,10 @@ class Journal extends Component {
                     </tbody>
                 </table>
             </div >
-      );
+        );
     }
 }
-
 const mapStatetoProps = state => ({
-  auth: state.auth
+    auth: state.auth
 });
-
 export default connect(mapStatetoProps)(Journal);
