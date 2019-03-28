@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PAGES } from '../../routes/pages';
 import icon from '../../public/images/checkmark-16.png';
-import './journal.css';
-// import Button from 'react-bootstrap/Button';
+import './journal.css'
+import { Button, ButtonGroup, Form } from 'react-bootstrap';
 
 
 class Journal extends Component {
@@ -33,7 +33,7 @@ class Journal extends Component {
       this.fetchData();
     }
 
-    signalNames = ['sig 1', 'sig 2', 'sig 3', 'sig 4', 'sig 5', 'sig 6', 'sig 7', 'sig 8', 'sig 9', 'sig 10'];
+    signalNames = ['sig_1', 'sig_2', 'sig_3', 'sig_4', 'sig_5', 'sig_6', 'sig_7', 'sig_8', 'sig_9', 'sig_10'];
 
     SignalHeader = this.signalNames.map(item => (
         <th key={`SignalHeader${item}`} scope="col">{item}</th>
@@ -58,7 +58,16 @@ class Journal extends Component {
       return (tmpData.toLocaleString()
       );
     };
-
+    onLabelChange = (e) => {
+        this.setState({
+            label: e.target.value
+        });
+    };
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.onItemAdded(this.state.label);
+        this.setState({ label: '' })
+    }
     render() {
       const { isAuthenticated, user: { firstName, email } } = this.props.auth;
       const { tradesInfo } = this.state.tradesInfo;
@@ -85,23 +94,24 @@ class Journal extends Component {
                     </thead>
                     <tbody>
                         <tr key={'main-table-row'} className='main-table-row'>
+
                             <td>{++maxTradeNumber}</td>
+                            <td><input type="text" className="form-control" placeholder="время открытия" onChange={this.onLabelChange} /></td>
+                            <td><input type="text" className="form-control" placeholder="актив" /></td>
+                            <td><input type="text" className="form-control" placeholder="лот" /></td>
+                            <td><input type="text" className="form-control" placeholder="цена открытия" /></td>
+                            <td><input type="text" className="form-control" placeholder="цена закрытия" /></td>
                             <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
-                            <td><input type="text" className="form-control" placeholder="итог" /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox1' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox2' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox3' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox4' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox5' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox6' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox7' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox8' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox9' label='' /></td>
+                            <td><Form.Check custom type='checkbox' id='custom-checkbox10' label='' /></td>
                             <td><button type='button' className='btn btn-success'>
                                 <i className='fa-handshake-o' />
                             </button></td>
