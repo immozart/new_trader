@@ -1,4 +1,4 @@
-/* .home-page {
+.home-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,12 +8,12 @@
   height: 80%;
   margin-top: 170px;
   padding: 1em;
-} */
+}
 
-body{
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(traderimg.jpg);
+/* body{
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(traderimg.jpg); 
   background-size: 100% auto;
   align-content: center;
   padding: 50px;
-  color: white;
-}
+  color: black;
+} */
