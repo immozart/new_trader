@@ -43,6 +43,7 @@ router.post('/upgrade_securities', async (req, res) => {
 });
 
 
+
 router.post('/registration', (req, res) => {
   const { errors, isValid } = validateRegistration(req.body);
 
