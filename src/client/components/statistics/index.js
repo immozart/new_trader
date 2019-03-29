@@ -327,12 +327,11 @@ console.log(tradesInfo.length)
 
 
   render() {
-    const { isAuthenticated, user: { firstName } } = this.props.auth;
+    // const { isAuthenticated, user: { firstName } } = this.props.auth;
     return (
       <div>
         <div>
-          {!isAuthenticated && <Redirect to='/' />}
-          {isAuthenticated && <div>Привет, {firstName}!</div>}
+          {!this.props.auth.isAuthenticated && <Redirect to='/' />}
         </div>
         <div id='grid'>
           <div className="gridDiv">

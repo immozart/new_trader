@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Signals from './todo-list/signals';
 import Securities from './todo-list/securities';
 import SignalAddForm from './item-add-form/signal-add-form';
@@ -72,7 +74,7 @@ class Settings extends Component {
     const newItem = this.createNewSignal(text);
     const { signals } = this.state;
     const newArr = [...signals, newItem];
-    this.setState({
+    await this.setState({
       signals: newArr
     });
     await axios.post('http://localhost:3000/api/upgrade_signals',
@@ -83,7 +85,7 @@ class Settings extends Component {
     const newItem = this.createNewSecurity(text, number);
     const { securities } = this.state;
     const newArr = [...securities, newItem];
-    this.setState({
+    await this.setState({
       securities: newArr
     });
     await axios.post('http://localhost:3000/api/upgrade_securities',
@@ -92,6 +94,7 @@ class Settings extends Component {
 
   render() {
     return (<div className="settings">
+      {!this.props.auth.isAuthenticated && <Redirect to='/' />}
       <div className="form-group">
         <h1>Мои торговые сигналы</h1>
         <SignalAddForm
@@ -114,4 +117,8 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+const mapStatetoProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStatetoProps)(Settings);
