@@ -1,21 +1,25 @@
+
+.fonDiv{
+  width: 100%;
+  height: 1000px;
+  
+  background: linear-gradient(rgba(0, 5, 46, 0.8), rgba(0, 0, 0, 0.8)), url(chart-1905225_1920.jpg); 
+  /* color: rgb(0, 0, 0); */
+  background-size: cover;
+  /* background-size: 100% auto; */
+  /* align-content: center;*/
+  padding: 250px;
+  background-repeat:space;
+}
 .home-page {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  width: 100%;
-  height: 80%;
-  margin-top: 170px;
-  padding: 1em;
-}
-
-/* body{
-
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(traderimg.jpg); 
-  background-size: 100% auto;
-  align-content: center;
-  padding: 50px;
-  color: black;
-
-} */
+  /* width: 80%; */
+  /*height: 80%;*/
+  
+  /* margin: 20%; */
+  
+    
+  }
