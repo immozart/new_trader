@@ -32,7 +32,7 @@ class Settings extends Component {
 
   getInfo = async () => {
     const { data } = await axios.post('http://localhost:3000/api/settings',
-      { email: 'rauf.erk@gmail.com' });
+      { email: 'erk.rauf@gmail.com' });
     const { signals, securities } = data;
     this.setState({
       signals,
@@ -53,7 +53,7 @@ class Settings extends Component {
       signals: [...before, ...after]
     });
     await axios.post('http://localhost:3000/api/upgrade_signals',
-      { email: 'rauf.erk@gmail.com', signals: [...before, ...after] });
+      { email: 'erk.rauf@gmail.com', signals: [...before, ...after] });
   }
 
   deleteSecurity = async (id) => {
@@ -65,7 +65,7 @@ class Settings extends Component {
       securities: [...before, ...after]
     });
     await axios.post('http://localhost:3000/api/upgrade_securities',
-      { email: 'rauf.erk@gmail.com', securities: [...before, ...after] });
+      { email: 'erk.rauf@gmail.com', securities: [...before, ...after] });
   }
 
   addSignal = async (text) => {
@@ -76,7 +76,7 @@ class Settings extends Component {
       signals: newArr
     });
     await axios.post('http://localhost:3000/api/upgrade_signals',
-      { email: 'rauf.erk@gmail.com', signals: newArr });
+      { email: 'erk.rauf@gmail.com', signals: newArr });
   };
 
   addSecurity = async (text) => {
@@ -87,7 +87,7 @@ class Settings extends Component {
       securities: newArr
     });
     await axios.post('http://localhost:3000/api/upgrade_securities',
-      { email: 'rauf.erk@gmail.com', securities: newArr });
+      { email: 'erk.rauf@gmail.com', securities: newArr });
   };
 
   render() {
