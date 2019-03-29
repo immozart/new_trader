@@ -35,9 +35,7 @@ class Journal extends Component {
             );
         }
     };
-    RenderChekboxes = this.signalNames.map(item => (
-        <td key={`SignalBoxes${item}`} ><Form.Check custom type='checkbox' id={item} label='' /></td>
-    ));
+
     ParseDate = (dateTimeFromMongo) => {
         const tmpData = new Date(dateTimeFromMongo);
         moment.locale('ru');
@@ -155,6 +153,12 @@ class Journal extends Component {
     GetDateTimeOnLine() {
         return moment().format('L hh:mm:ss')
     }
+    setSignalState(){
+        
+    }
+    RenderChekboxes = this.signalNames.map(item => (
+        <td key={`SignalBoxes${item}`} ><Form.Check custom type='checkbox' id={item} label='' onClick={(e)=>{}}/></td>
+    ));
     render() {
         const { isAuthenticated, user: { firstName, email } } = this.props.auth;
         const { tradesInfo: { tradesInfo }, newDateTime, tradeFactor } = this.state;
