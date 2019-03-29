@@ -5,15 +5,18 @@ class SecurityListItem extends Component {
   render() {
     const {
       securityLabel,
+      lotsNumber,
       onDeletedSecurity
     } = this.props;
 
     return (
-      <span>
-        <span>
-          {securityLabel}
-        </span>
+      <span className="paper-input">
+        <h2>
+          {securityLabel}: {lotsNumber}шт.
+        </h2>
+
         <button
+          className="btn btn-danger"
           onClick={onDeletedSecurity}>Удалить</button>
       </span>
     );

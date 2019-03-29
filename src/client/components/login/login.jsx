@@ -51,7 +51,7 @@ class Login extends Component {
             <label htmlFor="email">Электронная почта</label>
             <input type="email"
               className={email ? 'form-control is-invalid' : 'form-control'} id="email"
-              placeholder="например, rauf.erk@gmail.com"
+              placeholder="например, erk.rauf@gmail.com"
               onChange={this.onChange} value={this.state.email} />
             {<div className="invalid-feedback">{email}</div>}
           </div>

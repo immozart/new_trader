@@ -12,6 +12,12 @@ router.get('/data', async (req, res) => {
   res.send({ tradesInfo: tradesInfo }); 
 });
 
+router.post('/new_trade', async (req, res) => {
+  const { email, tradesInfo } = req.body;
+  await User.findOneAndUpdate({ email }, { tradesInfo });
+  res.status(200);
+});
+
 
 router.get('/user', async (req, res) => {
   const tradesInfo = await Trades.find();

@@ -3,7 +3,8 @@ import './item-add-form.css';
 
 class SecurityAddForm extends Component {
   state = {
-    securityLabel: ''
+    securityLabel: '',
+    lotsNumber: ''
   };
 
   onLabelChange = (e) => {
@@ -12,25 +13,42 @@ class SecurityAddForm extends Component {
     });
   };
 
+  onLotsChange = (e) => {
+    this.setState({
+      lotsNumber: e.target.value
+    });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.addSecurity(this.state.securityLabel);
+    this.props.addSecurity(this.state.securityLabel, this.state.lotsNumber);
     this.setState({
-      securityLabel: ''
+      securityLabel: '',
+      lotsNumber: ''
     });
   };
 
   render() {
-    return (<form
+    return (<form className="input"
+      
       onSubmit={this.onSubmit}>
       <button
+        className="btn btn-success"
         onClick={() => this.onLabelChange}>
         Добавить
       </button>
       <input
         type="text"
+        className="form-control"
+        placeholder="Название"
         onChange={this.onLabelChange}
-      value={this.state.securityLabel}/>
+        value={this.state.securityLabel} />
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Количество лотов"
+        onChange={this.onLotsChange}
+        value={this.state.lotsNumber} />
     </form>);
   }
 }

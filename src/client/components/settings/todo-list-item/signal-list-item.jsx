@@ -9,11 +9,12 @@ class SignalListItem extends Component {
     } = this.props;
 
     return (
-      <span>
-        <span>
+      <span className="paper-input">
+        <h2>
           {signalLabel}
-        </span>
+        </h2>
         <button
+          className="btn btn-danger"
           onClick={onDeletedSignal}>Удалить</button>
       </span>
     );

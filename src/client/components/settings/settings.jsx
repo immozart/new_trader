@@ -17,9 +17,9 @@ class Settings extends Component {
     };
   }
 
-  createNewSecurity(securityLabel) {
+  createNewSecurity(securityLabel, lotsNumber) {
     return {
-      securityLabel, id: this.maxIdSec++
+      securityLabel, lotsNumber, id: this.maxIdSec++
     };
   }
 
@@ -32,7 +32,7 @@ class Settings extends Component {
 
   getInfo = async () => {
     const { data } = await axios.post('http://localhost:3000/api/settings',
-      { email: 'rauf.erk@gmail.com' });
+      { email: 'erk.rauf@gmail.com' });
     const { signals, securities } = data;
     this.setState({
       signals,
@@ -53,7 +53,7 @@ class Settings extends Component {
       signals: [...before, ...after]
     });
     await axios.post('http://localhost:3000/api/upgrade_signals',
-      { email: 'rauf.erk@gmail.com', signals: [...before, ...after] });
+      { email: 'erk.rauf@gmail.com', signals: [...before, ...after] });
   }
 
   deleteSecurity = async (id) => {
@@ -65,7 +65,7 @@ class Settings extends Component {
       securities: [...before, ...after]
     });
     await axios.post('http://localhost:3000/api/upgrade_securities',
-      { email: 'rauf.erk@gmail.com', securities: [...before, ...after] });
+      { email: 'erk.rauf@gmail.com', securities: [...before, ...after] });
   }
 
   addSignal = async (text) => {
@@ -76,37 +76,39 @@ class Settings extends Component {
       signals: newArr
     });
     await axios.post('http://localhost:3000/api/upgrade_signals',
-      { email: 'rauf.erk@gmail.com', signals: newArr });
+      { email: 'erk.rauf@gmail.com', signals: newArr });
   };
 
-  addSecurity = async (text) => {
-    const newItem = this.createNewSecurity(text);
+  addSecurity = async (text, number) => {
+    const newItem = this.createNewSecurity(text, number);
     const { securities } = this.state;
     const newArr = [...securities, newItem];
     this.setState({
       securities: newArr
     });
     await axios.post('http://localhost:3000/api/upgrade_securities',
-      { email: 'rauf.erk@gmail.com', securities: newArr });
+      { email: 'erk.rauf@gmail.com', securities: newArr });
   };
 
   render() {
     return (<div className="settings">
       <div className="form-group">
-        <legend>Мои торговые сигналы</legend>
+        <h1>Мои торговые сигналы</h1>
+        <SignalAddForm
+          addSignal={this.addSignal} /><br></br>
         <Signals
           signalItems={this.state.signals}
           onDeletedSignal={this.deleteSignal} />
-        <SignalAddForm
-          addSignal={this.addSignal} />
       </div>
+
+
       <div className="form-group papers">
-        <legend>Мои торгуемые бумаги</legend>
+        <h1>Мои торгуемые бумаги</h1>
+        <SecurityAddForm
+          addSecurity={this.addSecurity} /><br></br>
         <Securities
           securityItems={this.state.securities}
           onDeletedSecurity={this.deleteSecurity} />
-        <SecurityAddForm
-          addSecurity={this.addSecurity} />
       </div>
     </div>);
   }

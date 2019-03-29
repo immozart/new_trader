@@ -12,30 +12,20 @@ class Journal extends Component {
         tradesInfo: { tradesInfo: [] },
         newDateTime: null,
         tradeSecurity: '',
-        moexFactor: 10,
-        tradeCapacity: 1,
+        tradeFactor: 10,
+        tradeCapacity: 0,
         tradeOpenPr: 0,
         tradeClosePr: 0,
         tradeResult: 0,
-        tradeSignals: []
+        tradeSignals: [],
     };
-    fetchData = async () => {
-        try {
-            const dataFromBase = await fetch(PAGES.API.fetchData.path);
-            const tradesInfo = await dataFromBase.json();
-            tradesInfo.tradesInfo.sort((a, b) => b.number - a.number);
-            this.setState({
-                tradesInfo
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    getDataFromMoex = async (argSecc) => {
+    maxTradeNumber = 0;
+
+    getDataFromMoex = async () => {
         try {
             if (argSecc.length == 4) {
-                console.log('---------------------------------------------------------' + argSecc);
-                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/' + argSecc + '.json');
+                console.log('---------------------------------------------------------');
+                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/sber.json');
                 const moexJson = await dataFromMoex.json();
                 const parsedMoexJson = await JSON.parse(moexJson);
                 console.log(parsedMoexJson);
@@ -49,11 +39,11 @@ class Journal extends Component {
             console.error(e);
         }
     };
-    componentDidMount() {       
+    componentDidMount() {
         this.fetchData();
+        // getDataFromMoex();
     }
     signalNames = ['sig_1', 'sig_2', 'sig_3', 'sig_4', 'sig_5', 'sig_6', 'sig_7', 'sig_8', 'sig_9', 'sig_10'];
-
     SignalHeader = this.signalNames.map(item => (
         <th key={`SignalHeader${item}`} scope="col">{item}</th>
     ));
@@ -72,25 +62,85 @@ class Journal extends Component {
         moment.locale('ru');
         return (moment(tmpData).format('L hh:mm:ss'))
     };
-    onSecNameChange = (e,argId) => {
+    tradeSecurityCH = (e) => {
         if (e) {
-            // this.getDataFromMoex(e.target.value);
-            console.log('-----------------------------------------')
-            console.log(argId)
-            console.log('-----------------------------------------')
             this.setState({
-                newDateTime: e.target.value
+                tradeSecurity: e.target.value
             });
         }
+    };
+    tradeCapacityCH = (e) => {
+        if (e) {
+            this.setState({
+                tradeCapacity: e.target.value
+            });
+        }
+    };
+    tradeOpenPrCH = (e) => {
+        if (e) {
+            this.setState({
+                tradeOpenPr: e.target.value,
+                newDateTime: moment().format('L hh:mm:ss')
+            });
+        }
+    };
+    tradeClosePrCH = (e) => {
+        if (e) {
+            this.setState({
+                tradeClosePr: e.target.value,
+                tradeResult: (e.target.value - this.state.tradeOpenPr) * this.state.tradeCapacity * this.state.tradeFactor
+            });
+        }
+    };
+    fetchData = async () => {
+        try {
+            const dataFromBase = await fetch(PAGES.API.fetchData.path);
+            const tradesInfo = await dataFromBase.json();
+            tradesInfo.tradesInfo.sort((a, b) => b.number - a.number);
+            tradesInfo.tradesInfo.map((item) => this.maxTradeNumber = Math.max(this.maxTradeNumber, item.number));
+            this.maxTradeNumber++;
+            this.setState({
+                tradesInfo
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    addSecurity = async (text, number) => {
+        const newItem = this.createNewSecurity(text, number);
+        const { securities } = this.state;
+        const newArr = [...securities, newItem];
+        this.setState({
+            securities: newArr
+        });
+        await axios.post('http://localhost:3000/api/upgrade_securities',
+            { email: 'erk.rauf@gmail.com', securities: newArr });
+    };
+    createNewSecurity(securityLabel, lotsNumber) {
+        return {
+            securityLabel, lotsNumber, id: this.maxIdSec++
+        };
+    }
+    addNewTrade = async (text) => {
+        const { tradesInfo: { tradesInfo } } = this.state;
+        const newItem = this.createNewSignal(text);
+        const { } = this.state;
+        const newArr = [...tradesInfo, newItem];
+        this.setState({
+            tradesInfo: tradesInfo
+        });
+        await axios.post('http://localhost:3000/api/new_trade',
+            { email: 'erk.rauf@gmail.com', tradesInfo: newObj });
     };
     GetDateTimeOnLine() {
         return moment().format('L hh:mm:ss')
     }
     render() {
         const { isAuthenticated, user: { firstName, email } } = this.props.auth;
-        const { tradesInfo: { tradesInfo }, newDateTime, moexFactor } = this.state;
+        const { tradesInfo: { tradesInfo }, newDateTime, tradeFactor } = this.state;
+        console.log(tradesInfo[0])
         let keyIndex = 0;
-        let maxTradeNumber = tradesInfo.length;
+
         return (
             <div className="center">
                 {/* {!isAuthenticated && <Redirect to='/' />} */}
@@ -113,16 +163,17 @@ class Journal extends Component {
                     </thead>
                     <tbody>
                         <tr key={'main-table-row'} className='main-table-row'>
-                            <td>{++maxTradeNumber}</td>
-                            <td>{this.GetDateTimeOnLine()}</td>
-                            <td><input type="text" className="form-control" placeholder="актив" id='tradeSecurity' onChange={this.onSecNameChange} /></td>
-                            <td>{moexFactor}</td>
-                            <td><input type="number" className="form-control" value='0' onChange={this.onSecNameChange} /></td>
-                            <td><input type="number" className="form-control" placeholder="цена открытия" /></td>
-                            <td><input type="number" className="form-control" placeholder="цена закрытия" /></td>
-                            <td>0123456</td>
+                            <td>{this.maxTradeNumber}</td>
+                            {/* <td>{this.GetDateTimeOnLine()}</td> */}
+                            <td>{this.state.newDateTime}</td>
+                            <td><input type="text" className="form-control" placeholder="актив" id='tradeSecurity' onChange={this.tradeSecurityCH} /></td>
+                            <td></td>
+                            <td><input type="number" className="form-control" placeholder="кол-во" onChange={this.tradeCapacityCH} /></td>
+                            <td><input type="number" className="form-control" placeholder="открытие" onChange={this.tradeOpenPrCH} /></td>
+                            <td><input type="number" className="form-control" placeholder="закрытие" onChange={this.tradeClosePrCH} /></td>
+                            <td>{this.state.tradeResult}</td>
                             {this.RenderChekboxes}
-                            <td><button type='button' className='btn btn-success'>
+                            <td><button type='button' className='btn btn-success' onClick={this.addNewTrade}>
                                 <i className='fa-handshake-o' />
                             </button></td>
                         </tr>

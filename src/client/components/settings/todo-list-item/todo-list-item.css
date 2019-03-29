@@ -1,7 +1,7 @@
-.done {
-    text-decoration: line-through;
+.paper-input {
+    display: flex;
 }
 
-.important {
-    font-weight: bold;
+.btn {
+    margin-left: 10px;
 }
