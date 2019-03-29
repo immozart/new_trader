@@ -25,6 +25,27 @@ fetchUrl("https://iss.moex.com/iss/engines/stock/markets/shares/securities/sber.
     // testArr.push(obj1);
     // console.log(testArr)
     //getDataFromJson(testArr);
+
+    getDataFromMoex = async () => {
+        try {
+            if (argSecc.length == 4) {
+                console.log('---------------------------------------------------------');
+                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/sber.json');
+                const moexJson = await dataFromMoex.json();
+                const parsedMoexJson = await JSON.parse(moexJson);
+                console.log(parsedMoexJson);
+                moexFactor = parsedMoexJson['securities']['data'][1][4];
+                console.log('---------------------------------------------------------' + moexFactor);
+                this.setState({
+                    moexFactor
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+
     let parsedBody = JSON.parse(body);
     getDataFromJson(parsedBody);
    //securities,data,1,4 
