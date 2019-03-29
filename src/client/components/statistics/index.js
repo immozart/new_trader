@@ -333,8 +333,13 @@ render() {
             <canvas className='canvasChart' id="myChart" width="700" height="700"></canvas>
           </div>
           <div>
+
+            {!isAuthenticated && <Redirect to='/' />}
+            {/* {isAuthenticated && <div>Привет, {firstName}!</div>} */}
+
             <label>Profit</label>
             <canvas className='canvasChart' id="myChart2" width="700" height="700"></canvas>
+
           </div>
           <div>
             <label>Signals</label>
