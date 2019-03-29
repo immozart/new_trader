@@ -59,15 +59,9 @@ class Statistic extends Component {
     for (let i of tradesInfo[0].signals) {
       signalsArr.push(0)
     }
-console.log(tradesInfo.length)
     for (let j = 0; j < tradesInfo.length; j++) {
       if (tradesInfo[j].result > 0) {
-        
-        console.log('tradesInfo[j].result', tradesInfo[j].result)
         for (let i = 0; i < tradesInfo[j].signals.length; i++) {
-          console.log('tradesInfo[j].signals',tradesInfo[j].signals)
-          console.log('tradesInfo[j].signals[i]', tradesInfo[j].signals[i])
-          
           let sum = tradesInfo[j].signals[i] + signalsArr[i];
           signalsArr[i] = sum;
         }
@@ -86,8 +80,8 @@ console.log(tradesInfo.length)
       }
       for (let i = 0; i < tradesInfo[j].signals.length; i++) {
 
-        let sum = tradesInfo[j].signals[i] + signalsArr[i];
-        signalsArr[i] = sum;
+        // let sum = tradesInfo[j].signals[i] + signalsArr[i];
+        // signalsArr[i] = sum;
       }
     }
 
@@ -107,226 +101,226 @@ console.log(tradesInfo.length)
 
     for (let f of signalObj) {
       signalsLabelSort.push(f.name)
-    }
-    //================================================
 
+    }
+ 
 
     const SecurityLabel = []
 
-    signalsArr = signalsArr.sort(function (a, b) { return b - a })
 
+    signalsArr = signalsArr.sort(function (a, b) { return b - a })
     for (let i in securityObj) {
       SecurityLabel.push(i)
       securityProfit.push(securityObj[i].value)
     }
-    this.setState({
-      charts: {
-        capital: cap,
-        chartLabels: chL
-      }
-    });
-    const { capital, chartLabels } = this.state.charts;
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: chartLabels,
-        datasets: [{
-          label: 'Capital',
-          data: capital,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
-          }],
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
-          }]
+      this.setState({
+        charts: {
+          capital: cap,
+          chartLabels: chL
         }
-      }
-    });
+      });
+      const { capital, chartLabels } = this.state.charts;
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            label: 'Capital',
+            data: capital,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }]
+          }
+        }
+      });
 
-    const ctx2 = document.getElementById('myChart2').getContext('2d');
-    const myChart2 = new Chart(ctx2, {
-      type: 'pie',
-      data: {
-        labels: ['Unprofitable', 'Profitable'],
-        datasets: [{
-          label: 'Profit',
-          data: profit,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
-          }],
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
+      const ctx2 = document.getElementById('myChart2').getContext('2d');
+      const myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: ['Unprofitable', 'Profitable'],
+          datasets: [{
+            label: 'Profit',
+            data: profit,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
           }]
+        },
+        options: {
+          responsive: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }]
+          }
         }
-      }
-    });
-    const ctx3 = document.getElementById('myChart3').getContext('2d');
-    const myChart3 = new Chart(ctx3, {
-      type: 'bar',
-      data: {
-        labels: signalsLabelSort,
-        datasets: [{
-          label: 'Signals',
-          data: signalsArr,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
-          }],
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
+      });
+      const ctx3 = document.getElementById('myChart3').getContext('2d');
+      const myChart3 = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: signalsLabelSort,
+          datasets: [{
+            label: 'Signals',
+            data: signalsArr,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
           }]
+        },
+        options: {
+          responsive: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }]
+          }
         }
-      }
-    });
-    const ctx4 = document.getElementById('myChart4').getContext('2d');
-    const myChart4 = new Chart(ctx4, {
-      type: 'bar',
-      data: {
-        labels: SecurityLabel,
-        datasets: [{
-          label: 'Stocks',
-          data: securityProfit,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
-          }],
-          xAxes: [{
-            ticks: {
-              beginAtZero: true,
-              fontSize: 20,
-              fontColor: '#000000'
-            }
+      });
+      const ctx4 = document.getElementById('myChart4').getContext('2d');
+      const myChart4 = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+          labels: SecurityLabel,
+          datasets: [{
+            label: 'Stocks',
+            data: securityProfit,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
           }]
+        },
+        options: {
+          responsive: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 20,
+                fontColor: '#000000'
+              }
+            }]
+          }
         }
-      }
-    });
-  }
+      });
+    }
 
 
-  render() {
+render() {
     // const { isAuthenticated, user: { firstName } } = this.props.auth;
     return (
       <div>

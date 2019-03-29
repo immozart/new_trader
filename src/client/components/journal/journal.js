@@ -20,25 +20,6 @@ class Journal extends Component {
         tradeSignals: [],
     };
     maxTradeNumber = 0;
-
-    getDataFromMoex = async () => {
-        try {
-            if (argSecc.length == 4) {
-                console.log('---------------------------------------------------------');
-                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/sber.json');
-                const moexJson = await dataFromMoex.json();
-                const parsedMoexJson = await JSON.parse(moexJson);
-                console.log(parsedMoexJson);
-                moexFactor = parsedMoexJson['securities']['data'][1][4];
-                console.log('---------------------------------------------------------' + moexFactor);
-                this.setState({
-                    moexFactor
-                });
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    };
     componentDidMount() {
         this.fetchData();
         // getDataFromMoex();
@@ -106,31 +87,39 @@ class Journal extends Component {
             console.error(e);
         }
     };
-    addSecurity = async (text, number) => {
-        const newItem = this.createNewSecurity(text, number);
-        const { securities } = this.state;
-        const newArr = [...securities, newItem];
-        this.setState({
-            securities: newArr
-        });
-        await axios.post('http://localhost:3000/api/upgrade_securities',
-            { email: 'erk.rauf@gmail.com', securities: newArr });
-    };
-    createNewSecurity(securityLabel, lotsNumber) {
-        return {
-            securityLabel, lotsNumber, id: this.maxIdSec++
-        };
-    }
+    // addSecurity = async (text, number) => {
+    //     const newItem = this.createNewSecurity(text, number);
+    //     const { securities } = this.state;
+    //     const newArr = [...securities, newItem];
+    //     this.setState({
+    //         securities: newArr
+    //     });
+    //     await axios.post('http://localhost:3000/api/upgrade_securities',
+    //         { email: 'erk.rauf@gmail.com', securities: newArr });
+    // };
+    // createNewSecurity(securityLabel, lotsNumber) {
+    //     return {
+    //         securityLabel, lotsNumber, id: this.maxIdSec++
+    //     };
+    // }   
+    // newDateTime: null,
+    // tradeSecurity: '',
+    // tradeFactor: 10,
+    // tradeCapacity: 0,
+    // tradeOpenPr: 0,
+    // tradeClosePr: 0,
+    // tradeResult: 0,
+    // tradeSignals: [], 
     addNewTrade = async (text) => {
-        const { tradesInfo: { tradesInfo } } = this.state;
-        const newItem = this.createNewSignal(text);
-        const { } = this.state;
-        const newArr = [...tradesInfo, newItem];
+        // const newItem = this.createNewSignal(text);
+        const { tradesInfo: { tradesInfo },...newTrade} = this.state;
+        console.log(newTrade);
+        const newArr = [...tradesInfo, newTrade];
         this.setState({
-            tradesInfo: tradesInfo
+            tradesInfo: newArr
         });
         await axios.post('http://localhost:3000/api/new_trade',
-            { email: 'erk.rauf@gmail.com', tradesInfo: newObj });
+            { email: 'erk.rauf@gmail.com', tradesInfo: newTrade });
     };
     GetDateTimeOnLine() {
         return moment().format('L hh:mm:ss')
@@ -169,7 +158,7 @@ class Journal extends Component {
                             <td></td>
                             <td><input type="number" className="form-control" placeholder="кол-во" onChange={this.tradeCapacityCH} /></td>
                             <td><input type="number" className="form-control" placeholder="открытие" onChange={this.tradeOpenPrCH} /></td>
-                            <td><input type="number" className="form-control" placeholder="закрытие" onChange={this.tradeClosePrCH} /></td>
+                            <td><input type="number" className="form-control" placeholder="закрытие" onChange={this.tradeClosePrCH} /></td>                            
                             <td>{this.state.tradeResult}</td>
                             {this.RenderChekboxes}
                             <td><button type='button' className='btn btn-success' onClick={this.addNewTrade}>
