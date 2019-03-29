@@ -16,7 +16,7 @@ class NavBar extends Component {
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
 
         {this.props.auth.isAuthenticated
-          && <Link className="navbar-brand" to="/dashboard"><b>Trader's Journal</b></Link>}
+          && <Link className="navbar-brand" to="/journal"><b>Trader's Journal</b></Link>}
 
         {!this.props.auth.isAuthenticated
           && <Link className="navbar-brand" to="/"><b>Trader's Journal</b></Link>}
