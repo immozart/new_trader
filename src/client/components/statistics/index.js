@@ -64,7 +64,6 @@ class Statistic extends Component {
         for (let i = 0; i < tradesInfo[j].signals.length; i++) {
           let sum = tradesInfo[j].signals[i] + signalsArr[i];
           signalsArr[i] = sum;
- 
         }
       }
     }
@@ -106,12 +105,10 @@ class Statistic extends Component {
     }
  
 
-
     const SecurityLabel = []
 
-    console.log('signalsArr=signalsArr', signalsArr)
+
     signalsArr = signalsArr.sort(function (a, b) { return b - a })
-    console.log('signalsArr=sort=signalsArr', signalsArr)
     for (let i in securityObj) {
       SecurityLabel.push(i)
       securityProfit.push(securityObj[i].value)
@@ -323,7 +320,7 @@ class Statistic extends Component {
     }
 
 
-    render() 
+    render() {
       const { isAuthenticated, user: { firstName } } = this.props.auth;
       return (
         <div>
