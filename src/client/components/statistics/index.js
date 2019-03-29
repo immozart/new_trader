@@ -17,7 +17,6 @@ class Statistic extends Component {
     }
   };
 
-
   fetchData = async () => {
   };
 
@@ -31,18 +30,13 @@ class Statistic extends Component {
       console.error(e);
     }
     const { tradesInfo } = this.state.tradesInfo;
-    // console.log('tradesInfo===fetch()', tradesInfo);
-
-
     const cap = [];
     const chL = []; //chartLabels
     const profit = [];
 
-
     let j = 0;
     let prof = 0;
     let unprof = 0;
-
 
     for (let i of tradesInfo) {
       j = j + i.result
@@ -61,14 +55,12 @@ class Statistic extends Component {
     }
     profit.push(unprof, prof);
 
-
     //Signals
     let signalsArr = [];
     const signalLabel = ['sig6', 'sig9', 'sig3', 'sig10', 'sig5', 'sig1', 'sig7', 'sig8', 'sig2', 'sig4'];
 
     for (let i of tradesInfo[0].signals) {
       signalsArr.push(0)
-
     }
 
     for (let j = 0; j < tradesInfo.length; j++) {
@@ -76,8 +68,6 @@ class Statistic extends Component {
         for (let i = 0; i < tradesInfo[j].signals.length; i++) {
           let sum = tradesInfo[j].signals[i] + signalsArr[i];
           signalsArr[i] = sum;
-
-
         }
       }
     }
@@ -86,7 +76,6 @@ class Statistic extends Component {
     // Security
     const securityObj = []
     const securityProfit = []
-
 
     for (let j = 0; j < tradesInfo.length; j++) {
       if (securityObj[tradesInfo[j].security]) {
@@ -117,8 +106,7 @@ class Statistic extends Component {
 
     for (let f of signalObj) {
       signalsLabelSort.push(f.name)
-    }
-    console.log('signalsLabelSort', signalsLabelSort)
+
     //================================================
 
     const SecurityLabel = []
