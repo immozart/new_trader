@@ -17,9 +17,6 @@ class Statistic extends Component {
     }
   };
 
-  fetchData = async () => {
-  };
-
   componentDidMount = async () => {
     try {
       const dataFromBase = await fetch(PAGES.API.fetchData.path);
@@ -72,7 +69,6 @@ class Statistic extends Component {
       }
     }
 
-
     // Security
     const securityObj = []
     const securityProfit = []
@@ -108,6 +104,7 @@ class Statistic extends Component {
       signalsLabelSort.push(f.name)
     }
     //================================================
+
 
     const SecurityLabel = []
 
