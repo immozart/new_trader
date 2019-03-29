@@ -12,12 +12,12 @@ class Journal extends Component {
         tradesInfo: { tradesInfo: [] },
         newDateTime: null,
         tradeSecurity: '',
-        moexFactor: 10,
-        tradeCapacity: 1,
+        tradeFactor: 10,
+        tradeCapacity: 0,
         tradeOpenPr: 0,
         tradeClosePr: 0,
         tradeResult: 0,
-        tradeSignals: []
+        tradeSignals: [],
     };
     fetchData = async () => {
         try {
@@ -31,11 +31,11 @@ class Journal extends Component {
             console.error(e);
         }
     };
-    getDataFromMoex = async (argSecc) => {
+    getDataFromMoex = async () => {
         try {
             if (argSecc.length == 4) {
-                console.log('---------------------------------------------------------' + argSecc);
-                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/' + argSecc + '.json');
+                console.log('---------------------------------------------------------');
+                const dataFromMoex = await fetch('https://iss.moex.com/iss/engines/stock/markets/shares/securities/sber.json');
                 const moexJson = await dataFromMoex.json();
                 const parsedMoexJson = await JSON.parse(moexJson);
                 console.log(parsedMoexJson);
@@ -49,8 +49,9 @@ class Journal extends Component {
             console.error(e);
         }
     };
-    componentDidMount() {       
+    componentDidMount() {
         this.fetchData();
+        // getDataFromMoex();
     }
     signalNames = ['sig_1', 'sig_2', 'sig_3', 'sig_4', 'sig_5', 'sig_6', 'sig_7', 'sig_8', 'sig_9', 'sig_10'];
 
@@ -72,23 +73,60 @@ class Journal extends Component {
         moment.locale('ru');
         return (moment(tmpData).format('L hh:mm:ss'))
     };
-    onSecNameChange = (e,argId) => {
+    // newDateTime: null,
+    // tradeSecurity: '',
+    // tradeFactor: 1,
+    // tradeCapacity: 0,
+    // tradeOpenPr: 0,
+    // tradeClosePr: 0,
+    // tradeResult: 0,
+    // tradeSignals: [],
+    // noLabelChange = (stateParameter,e) => {
+    //     if (e) {
+    //         this.setState({
+    //             [stateParameter]: e.target.value
+    //         });
+    //     }
+    // };
+    tradeSecurityCH = (e) => {
         if (e) {
-            // this.getDataFromMoex(e.target.value);
-            console.log('-----------------------------------------')
-            console.log(argId)
-            console.log('-----------------------------------------')
             this.setState({
-                newDateTime: e.target.value
+                tradeSecurity: e.target.value
             });
         }
     };
+    tradeCapacityCH = (e) => {
+        if (e) {
+            this.setState({
+                tradeCapacity: e.target.value
+            });
+        }
+    };
+    tradeOpenPrCH = (e) => {
+        if (e) {
+            this.setState({
+                tradeOpenPr: e.target.value,
+                newDateTime: moment().format('L hh:mm:ss')
+            });
+        }
+    };
+    tradeClosePrCH = (e) => {
+        if (e) {
+            this.setState({
+                tradeClosePr: e.target.value,
+                tradeResult: (e.target.value - this.state.tradeOpenPr) * this.state.tradeCapacity * this.state.tradeFactor
+            });
+        }
+    };
+    addNewTrade =()=> {
+
+    }
     GetDateTimeOnLine() {
         return moment().format('L hh:mm:ss')
     }
     render() {
         const { isAuthenticated, user: { firstName, email } } = this.props.auth;
-        const { tradesInfo: { tradesInfo }, newDateTime, moexFactor } = this.state;
+        const { tradesInfo: { tradesInfo }, newDateTime, tradeFactor } = this.state;
         let keyIndex = 0;
         let maxTradeNumber = tradesInfo.length;
         return (
@@ -114,15 +152,16 @@ class Journal extends Component {
                     <tbody>
                         <tr key={'main-table-row'} className='main-table-row'>
                             <td>{++maxTradeNumber}</td>
-                            <td>{this.GetDateTimeOnLine()}</td>
-                            <td><input type="text" className="form-control" placeholder="актив" id='tradeSecurity' onChange={this.onSecNameChange} /></td>
-                            <td>{moexFactor}</td>
-                            <td><input type="number" className="form-control" value='0' onChange={this.onSecNameChange} /></td>
-                            <td><input type="number" className="form-control" placeholder="цена открытия" /></td>
-                            <td><input type="number" className="form-control" placeholder="цена закрытия" /></td>
-                            <td>0123456</td>
+                            {/* <td>{this.GetDateTimeOnLine()}</td> */}
+                            <td>{this.state.newDateTime}</td>
+                            <td>{this.state.tradeSecurity}<input type="text" className="form-control" placeholder="актив" id='tradeSecurity' onChange={this.tradeSecurityCH} /></td>
+                            <td>{this.state.tradeFactor}</td>
+                            <td>{this.state.tradeCapacity}<input type="number" className="form-control" placeholder="кол-во" onChange={this.tradeCapacityCH} /></td>
+                            <td>{this.state.tradeOpenPr}<input type="number" className="form-control" placeholder="открытие" onChange={this.tradeOpenPrCH} /></td>
+                            <td>{this.state.tradeClosePr}<input type="number" className="form-control" placeholder="закрытие" onChange={this.tradeClosePrCH} /></td>
+                            <td>{this.state.tradeResult}</td>
                             {this.RenderChekboxes}
-                            <td><button type='button' className='btn btn-success'>
+                            <td><button type='button' className='btn btn-success' onClick={this.addNewTrade}>
                                 <i className='fa-handshake-o' />
                             </button></td>
                         </tr>
