@@ -19,7 +19,7 @@ class Registration extends Component {
       this.setState({
         errors: {}
       });
-      this.props.history.push('/dashboard');
+      this.props.history.push('/journal');
     }
     if (nextProps.errors) {
       this.setState({

@@ -17,21 +17,6 @@ class Statistic extends Component {
     }
   };
 
-  // computation = async () => {
-  //   const cap = [];
-  //   const { tradesInfo } = this.state.tradesInfo;
-  //   console.log('tradesInfo:tttttttttt', tradesInfo);
-  //   for (let i of tradesInfo) {
-  //     cap.push(i.result)
-  //   }
-  //   this.setState({
-  //     carts: {
-  //       cap
-  //     }
-  //   });
-  //   console.log('this.state.charts.cap', this.state.charts.cap[0]);
-  // }
-
   fetchData = async () => {
   };
 
@@ -45,23 +30,16 @@ class Statistic extends Component {
       console.error(e);
     }
     const { tradesInfo } = this.state.tradesInfo;
-    // console.log('tradesInfo===fetch()', tradesInfo);
-
-
     const cap = [];
     const chL = []; //chartLabels
     const profit = [];
 
-    //  const { tradesInfo } = this.state.tradesInfo;
-    // console.log('tradesInfo:tttttttttt', tradesInfo);
     let j = 0;
     let prof = 0;
     let unprof = 0;
 
-    // eslint-disable-next-line no-restricted-syntax
     for (let i of tradesInfo) {
       j = j + i.result
-      // console.log('JJJJJJJJJJJJJJJJJJ', j)
       cap.push(j);
 
       const d = new Date(i.tradeData);
@@ -77,82 +55,68 @@ class Statistic extends Component {
     }
     profit.push(unprof, prof);
 
-
     //Signals
     let signalsArr = [];
-    const signalLabel = ['sig1', 'sig2', 'sig3', 'sig4', 'sig5', 'sig6', 'sig7', 'sig8', 'sig9', 'sig10'];
+    const signalLabel = ['sig6', 'sig9', 'sig3', 'sig10', 'sig5', 'sig1', 'sig7', 'sig8', 'sig2', 'sig4'];
 
     for (let i of tradesInfo[0].signals) {
       signalsArr.push(0)
-      // console.log('signalsArrsignalsArrsignalsArr', signalsArr)
     }
-    //  console.log('tradesInfo.lengthtradesInfo.lengthtradesInfo.lengthtradesInfo.length', tradesInfo.length);
 
     for (let j = 0; j < tradesInfo.length; j++) {
       if (tradesInfo[j].result) {
         for (let i = 0; i < tradesInfo[j].signals.length; i++) {
-          //     console.log('radesInfo[j].signals', tradesInfo[j].signals[i], signalsArr[i]);
           let sum = tradesInfo[j].signals[i] + signalsArr[i];
           signalsArr[i] = sum;
         }
       }
     }
-    //   console.log('signalsArr', signalsArr)
 
-    //Security
+
+    // Security
     const securityObj = []
     const securityProfit = []
-    const SecurityLabel = []
 
     for (let j = 0; j < tradesInfo.length; j++) {
-      // eslint-disable-next-line operator-assignment
-
       if (securityObj[tradesInfo[j].security]) {
-        console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
-
         securityObj[tradesInfo[j].security].value += tradesInfo[j].result;
-        //   //           h.value += tradesInfo[j].result;
       } else {
         securityObj[tradesInfo[j].security] = { name: tradesInfo[j].security, value: tradesInfo[j].result };
       }
-
-      //   console.log('OBJ-OBJ-OBJ-OBJ-OBJ-OBJ-', securityObj)
-      //   //           //  securityObj.value[tradesInfo[j].value] = tradesInfo[j].result;
-      // }
       for (let i = 0; i < tradesInfo[j].signals.length; i++) {
-        //  console.log('radesInfo[j].signals', tradesInfo[j].signals[i], signalsArr[i]);
+
         let sum = tradesInfo[j].signals[i] + signalsArr[i];
         signalsArr[i] = sum;
       }
     }
 
-    console.log('SSSSSSSSSSS////////////////////SSSSSSSSSSSSsecurityObj', securityObj)
-    console.log('signalsArr', signalsArr);
+    //Сортировка лэйблов===========================
+    const signalsArrLabel = ['sig1', 'sig2', 'sig3', 'sig4', 'sig5', 'sig6', 'sig7', 'sig8', 'sig9', 'sig10']
+    const signalsLabelSort = []
+
+    const signalObj = []
+
+    for (let s in signalsArr) {
+      signalObj.push({ name: signalsArrLabel[s], value: signalsArr[s] })
+    }
+
+    signalObj.sort(function (a, b) {
+      return a.value - b.value
+    })
+
+    for (let f of signalObj) {
+      signalsLabelSort.push(f.name)
+
+    //================================================
+
+    const SecurityLabel = []
 
     signalsArr = signalsArr.sort(function (a, b) { return b - a })
-    //   console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', signalsArr)
 
-    // securityObj = securityObj.sort(function (a, b) { return a.value - b.value })
-    console.log('ooooooooooooooooooooooooooo', securityObj)
-
-
-
-    // securityObj.keys(securityObj).forEach(function (prop) {
-
-    // })
     for (let i in securityObj) {
-      console.log('securityObjsecurityObjsecurityObj', securityObj[i].value)
       SecurityLabel.push(i)
       securityProfit.push(securityObj[i].value)
     }
-    console.log(SecurityLabel)
-    console.log(securityProfit)
-
-
-
-
-
-
     this.setState({
       charts: {
         capital: cap,
@@ -160,20 +124,6 @@ class Statistic extends Component {
       }
     });
     const { capital, chartLabels } = this.state.charts;
-    console.log('this.state.charts.cap', capital, chartLabels);
-    //  this.fetchData();
-
-
-
-
-
-
-
-
-    // const { tradesInfo } = this.state.tradesInfo;
-    // const { cap } = this.state.charts;
-    console.log('tradesInfo===componentDidMount()', capital);
-
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
       type: 'line',
@@ -273,7 +223,7 @@ class Statistic extends Component {
     const myChart3 = new Chart(ctx3, {
       type: 'bar',
       data: {
-        labels: signalLabel,
+        labels: signalsLabelSort,
         datasets: [{
           label: 'Signals',
           data: signalsArr,
@@ -331,12 +281,6 @@ class Statistic extends Component {
         labels: SecurityLabel,
         datasets: [{
           label: 'Stocks',
-          //   font: {
-          //     family: 'Courier'
-          //   },
-          //   fontsize: '50'
-          // },
-
           data: securityProfit,
           backgroundColor: [
             'rgba(255, 99, 132, 0.5)',
@@ -377,23 +321,16 @@ class Statistic extends Component {
         }
       }
     });
-
-    // console.log('tradesInfo===computation()', tradesInfo);
-    // this.computation();
   }
 
 
   render() {
-    const { isAuthenticated, user: { firstName, email } } = this.props.auth;
-    const { tradesInfo } = this.state.tradesInfo;
+    const { isAuthenticated, user: { firstName } } = this.props.auth;
     return (
       <div>
         <div>
           {!isAuthenticated && <Redirect to='/' />}
           {isAuthenticated && <div>Привет, {firstName}!</div>}
-          {/* {JSON.stringify(tradesInfo)} */}
-          {/* {tradesInfo.map(trade => <div key={trade.number}>{trade.number}</div>)} */}
-
         </div>
         <div id='grid'>
           <div className="gridDiv">
@@ -401,15 +338,15 @@ class Statistic extends Component {
             <canvas className='canvasChart' id="myChart" width="700" height="700"></canvas>
           </div>
           <div>
-          <label>Profit</label>
+            <label>Profit</label>
             <canvas className='canvasChart' id="myChart2" width="700" height="700"></canvas>
           </div>
           <div>
-          <label>Signals</label>
+            <label>Signals</label>
             <canvas className='canvasChart' id="myChart3" width="700" height="700"></canvas>
           </div>
           <div>
-          <label>Stocks</label>
+            <label>Stocks</label>
             <canvas className='canvasChart' id="myChart4" width="700" height="700"></canvas>
           </div>
         </div>
