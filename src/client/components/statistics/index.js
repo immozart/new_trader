@@ -59,18 +59,12 @@ class Statistic extends Component {
     for (let i of tradesInfo[0].signals) {
       signalsArr.push(0)
     }
-    console.log(tradesInfo.length)
     for (let j = 0; j < tradesInfo.length; j++) {
       if (tradesInfo[j].result > 0) {
-
-        console.log('tradesInfo[j].result', tradesInfo[j].result)
         for (let i = 0; i < tradesInfo[j].signals.length; i++) {
-          console.log('tradesInfo[j].signals', tradesInfo[j].signals)
-          console.log('tradesInfo[j].signals[i]', tradesInfo[j].signals[i])
-
           let sum = tradesInfo[j].signals[i] + signalsArr[i];
           signalsArr[i] = sum;
-          console.log('signalsArr=signalsArr', signalsArr)
+ 
         }
       }
     }
