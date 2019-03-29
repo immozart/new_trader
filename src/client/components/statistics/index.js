@@ -320,39 +320,39 @@ class Statistic extends Component {
     }
 
 
-    render() {
-      const { isAuthenticated, user: { firstName } } = this.props.auth;
-      return (
+render() {
+    // const { isAuthenticated, user: { firstName } } = this.props.auth;
+    return (
+      <div>
         <div>
-          <div>
-            {!isAuthenticated && <Redirect to='/' />}
-            {isAuthenticated && <div>Привет, {firstName}!</div>}
+          {!this.props.auth.isAuthenticated && <Redirect to='/' />}
+        </div>
+        <div id='grid'>
+          <div className="gridDiv">
+            <label>Capital</label>
+            <canvas className='canvasChart' id="myChart" width="700" height="700"></canvas>
           </div>
-          <div id='grid'>
-            <div className="gridDiv">
-              <label>Capital</label>
-              <canvas className='canvasChart' id="myChart" width="700" height="700"></canvas>
-            </div>
-            <div>
-              <label>Profit</label>
-              <canvas className='canvasChart' id="myChart2" width="700" height="700"></canvas>
-            </div>
-            <div>
-              <label>Signals</label>
-              <canvas className='canvasChart' id="myChart3" width="700" height="700"></canvas>
-            </div>
-            <div>
-              <label>Stocks</label>
-              <canvas className='canvasChart' id="myChart4" width="700" height="700"></canvas>
-            </div>
+          <div>
+            <label>Profit</label>
+            <canvas className='canvasChart' id="myChart2" width="700" height="700"></canvas>
+          </div>
+          <div>
+            <label>Signals</label>
+            <canvas className='canvasChart' id="myChart3" width="700" height="700"></canvas>
+          </div>
+          <div>
+            <label>Stocks</label>
+            <canvas className='canvasChart' id="myChart4" width="700" height="700"></canvas>
           </div>
         </div>
-      );
-    }
+
+      </div>
+    );
   }
+}
 
-  const mapStatetoProps = state => ({
-    auth: state.auth
-  });
+const mapStatetoProps = state => ({
+  auth: state.auth
+});
 
-  export default connect(mapStatetoProps)(Statistic);
+export default connect(mapStatetoProps)(Statistic);

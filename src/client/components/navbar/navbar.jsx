@@ -34,9 +34,7 @@ class NavBar extends Component {
               <Link className="nav-link" to="/settings">Настройки</Link>
             </li>
           </ul>}
-
         </div>
-        
         {!this.props.auth.isAuthenticated
           && <div>
             <Link to="/login">
@@ -53,7 +51,6 @@ class NavBar extends Component {
               <button className="btn btn-warning enter" onClick={this.onLogout}>Выйти</button>
             </Link>
           </div>}
-        
       </nav>
     );
   }
