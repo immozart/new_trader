@@ -24,7 +24,7 @@ class Journal extends Component {
         this.fetchData();
         // getDataFromMoex();
     }
-    signalNames = ['sig_1', 'sig_2', 'sig_3', 'sig_4', 'sig_5', 'sig_6', 'sig_7', 'sig_8', 'sig_9', 'sig_10'];
+    signalNames = ['отбой д7', 'отбой д14', 'отбой ч7', 'отбой ч14', 'паралел', '-ЖЖО-', 'концентр', 'Фибо 62', 'повтор 2т', '-ГИП-'];
     SignalHeader = this.signalNames.map(item => (
         <th key={`SignalHeader${item}`} scope="col">{item}</th>
     ));
