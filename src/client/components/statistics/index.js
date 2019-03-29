@@ -17,9 +17,6 @@ class Statistic extends Component {
     }
   };
 
-  fetchData = async () => {
-  };
-
   componentDidMount = async () => {
     try {
       const dataFromBase = await fetch(PAGES.API.fetchData.path);
@@ -62,16 +59,20 @@ class Statistic extends Component {
     for (let i of tradesInfo[0].signals) {
       signalsArr.push(0)
     }
-
+console.log(tradesInfo.length)
     for (let j = 0; j < tradesInfo.length; j++) {
-      if (tradesInfo[j].result) {
+      if (tradesInfo[j].result > 0) {
+        
+        console.log('tradesInfo[j].result', tradesInfo[j].result)
         for (let i = 0; i < tradesInfo[j].signals.length; i++) {
+          console.log('tradesInfo[j].signals',tradesInfo[j].signals)
+          console.log('tradesInfo[j].signals[i]', tradesInfo[j].signals[i])
+          
           let sum = tradesInfo[j].signals[i] + signalsArr[i];
           signalsArr[i] = sum;
         }
       }
     }
-
 
     // Security
     const securityObj = []
@@ -106,8 +107,9 @@ class Statistic extends Component {
 
     for (let f of signalObj) {
       signalsLabelSort.push(f.name)
-
+    }
     //================================================
+
 
     const SecurityLabel = []
 
