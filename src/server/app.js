@@ -10,6 +10,8 @@ import router from './router';
 import authRouter from './auth-router';
 import Button from 'react-bootstrap/Button';
 
+const MongoSession = require('connect-mongo')(session);
+
 const passport = require('passport');
 
 const mongoose = require('mongoose');
@@ -27,18 +29,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(session({
-  // store: new RedisStore({
-  //   client,
-  //   host: 'localhost',
-  //   port: 6379,
-  //   ttl :  260
-  // }),
+  store: new MongoSession({
+    mongooseConnection: mongoose.connection,
+    collection: 'session',
+    autoRemove: 'interval',
+    autoRemoveInterval: 120
+  }),
   key: 'user_sid',
   secret: 'anything here',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: 600000
+    expires: 6000000
   }
 }));
 

@@ -17,9 +17,9 @@ class Settings extends Component {
     };
   }
 
-  createNewSecurity(securityLabel) {
+  createNewSecurity(securityLabel, lotsNumber) {
     return {
-      securityLabel, id: this.maxIdSec++
+      securityLabel, lotsNumber, id: this.maxIdSec++
     };
   }
 
@@ -79,8 +79,8 @@ class Settings extends Component {
       { email: 'erk.rauf@gmail.com', signals: newArr });
   };
 
-  addSecurity = async (text) => {
-    const newItem = this.createNewSecurity(text);
+  addSecurity = async (text, number) => {
+    const newItem = this.createNewSecurity(text, number);
     const { securities } = this.state;
     const newArr = [...securities, newItem];
     this.setState({
