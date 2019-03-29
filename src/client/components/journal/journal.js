@@ -17,7 +17,7 @@ class Journal extends Component {
         tradeOpenPr: 0,
         tradeClosePr: 0,
         tradeResult: 0,
-        tradeSignals: [],
+        tradeSignals: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
     maxTradeNumber = 0;
     componentDidMount() {
@@ -111,25 +111,54 @@ class Journal extends Component {
     // tradeResult: 0,
     // tradeSignals: [], 
     addNewTrade = async (text) => {
-        // const newItem = this.createNewSignal(text);
-        const { tradesInfo: { tradesInfo },...newTrade} = this.state;
+        let newTrade = {};
+        // const newItem = this.createNewSignal(text);      
+        // const { tradesInfo: { tradesInfo }, ...newTrade} = this.state;
+        const { tradesInfo: { tradesInfo }, newDateTime, tradeSecurity, tradeFactor, tradeCapacity, tradeOpenPr, tradeClosePr, tradeResult, tradeSignals } = this.state;
+        console.log(tradesInfo);
+        newTrade['capacity'] = tradeCapacity;
+        newTrade['closePrice'] = tradeClosePr;
+        newTrade['factor'] = tradeFactor;
+        newTrade['number'] = this.maxTradeNumber++;
+        newTrade['openPrice'] = tradeOpenPr;
+        newTrade['result'] = tradeResult;
+        newTrade['security'] = tradeSecurity;
+        newTrade['signals'] = tradeSignals;
+        newTrade['tradeData'] = newDateTime;
+        newTrade['user'] = 'erk.rauf@gmail.com'
+        newTrade['__v'] = 0;
+        newTrade['_id'] = newDateTime;
         console.log(newTrade);
-        const newArr = [...tradesInfo, newTrade];
+        const newArr = [newTrade,...tradesInfo];
+        console.log('--------------------------------------------------------------');
+        console.log(newArr);
         this.setState({
-            tradesInfo: newArr
+            tradesInfo:{
+                tradesInfo:newArr
+            }
         });
-        await axios.post('http://localhost:3000/api/new_trade',
+        await fetch('http://localhost:3000/api/new_trade',
             { email: 'erk.rauf@gmail.com', tradesInfo: newTrade });
     };
+    //     capacity: 1
+    // closePrice: 100
+    // factor: 50
+    // number: 1
+    // openPrice: 97
+    // result: 150
+    // security: "BR"
+    // signals: (10) [1, 0, 1, 0, 1, 1, 1, 0, 0, 1]
+    // tradeData: "2018-06-02T14:23:58.575Z"
+    // user: "traider"
+    // __v: 0
+    // _id: "5c9a0759cfa74f48a30861b9"
     GetDateTimeOnLine() {
         return moment().format('L hh:mm:ss')
     }
     render() {
         const { isAuthenticated, user: { firstName, email } } = this.props.auth;
         const { tradesInfo: { tradesInfo }, newDateTime, tradeFactor } = this.state;
-        console.log(tradesInfo[0])
         let keyIndex = 0;
-
         return (
             <div className="center">
                 {/* {!isAuthenticated && <Redirect to='/' />} */}
@@ -159,7 +188,7 @@ class Journal extends Component {
                             <td></td>
                             <td><input type="number" className="form-control" placeholder="кол-во" onChange={this.tradeCapacityCH} /></td>
                             <td><input type="number" className="form-control" placeholder="открытие" onChange={this.tradeOpenPrCH} /></td>
-                            <td><input type="number" className="form-control" placeholder="закрытие" onChange={this.tradeClosePrCH} /></td>                            
+                            <td><input type="number" className="form-control" placeholder="закрытие" onChange={this.tradeClosePrCH} /></td>
                             <td>{this.state.tradeResult}</td>
                             {this.RenderChekboxes}
                             <td><button type='button' className='btn btn-success' onClick={this.addNewTrade}>

@@ -14,7 +14,7 @@ router.get('/data', async (req, res) => {
 
 router.post('/new_trade', async (req, res) => {
   const { email, tradesInfo } = req.body;
-  await User.findOneAndUpdate({ email }, { tradesInfo });
+  await User.insertOne({ email }, { tradesInfo });
   res.status(200);
 });
 
