@@ -106,7 +106,7 @@ class Statistic extends Component {
 
     for (let f of signalObj) {
       signalsLabelSort.push(f.name)
-
+    }
     //================================================
 
     const SecurityLabel = []
