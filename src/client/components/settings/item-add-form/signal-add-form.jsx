@@ -21,16 +21,18 @@ class SignalAddForm extends Component {
   };
 
   render() {
-    return (<form
+    return (<form className="signals"
       onSubmit={this.onSubmit}>
       <button
+        className="btn btn-success"
         onClick={() => this.onLabelChange}>
         Добавить
       </button>
       <input
         type="text"
+        className="form-control"
         onChange={this.onLabelChange}
-      value={this.state.signalLabel}/>
+        value={this.state.signalLabel} />
     </form>);
   }
 }

@@ -29,19 +29,23 @@ class SecurityAddForm extends Component {
   };
 
   render() {
-    return (<form
+    return (<form className="input"
+      
       onSubmit={this.onSubmit}>
       <button
+        className="btn btn-success"
         onClick={() => this.onLabelChange}>
         Добавить
       </button>
       <input
         type="text"
+        className="form-control"
         placeholder="Название"
         onChange={this.onLabelChange}
         value={this.state.securityLabel} />
       <input
         type="text"
+        className="form-control"
         placeholder="Количество лотов"
         onChange={this.onLotsChange}
         value={this.state.lotsNumber} />
