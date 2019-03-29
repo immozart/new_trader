@@ -10,11 +10,13 @@ class SecurityListItem extends Component {
     } = this.props;
 
     return (
-      <span>
-        <span>
-          {securityLabel} {lotsNumber}
-        </span>
+      <span className="paper-input">
+        <h2>
+          {securityLabel}: {lotsNumber}шт.
+        </h2>
+
         <button
+          className="btn btn-danger"
           onClick={onDeletedSecurity}>Удалить</button>
       </span>
     );

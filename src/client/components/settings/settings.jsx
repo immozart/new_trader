@@ -93,20 +93,22 @@ class Settings extends Component {
   render() {
     return (<div className="settings">
       <div className="form-group">
-        <legend>Мои торговые сигналы</legend>
+        <h1>Мои торговые сигналы</h1>
+        <SignalAddForm
+          addSignal={this.addSignal} /><br></br>
         <Signals
           signalItems={this.state.signals}
           onDeletedSignal={this.deleteSignal} />
-        <SignalAddForm
-          addSignal={this.addSignal} />
       </div>
+
+
       <div className="form-group papers">
-        <legend>Мои торгуемые бумаги</legend>
+        <h1>Мои торгуемые бумаги</h1>
+        <SecurityAddForm
+          addSecurity={this.addSecurity} /><br></br>
         <Securities
           securityItems={this.state.securities}
           onDeletedSecurity={this.deleteSecurity} />
-        <SecurityAddForm
-          addSecurity={this.addSecurity} />
       </div>
     </div>);
   }
