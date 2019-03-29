@@ -326,7 +326,7 @@ class Statistic extends Component {
         <div>
           <div>
             {!isAuthenticated && <Redirect to='/' />}
-            {isAuthenticated && <div>Привет, {firstName}!</div>}
+            {/* {isAuthenticated && <div>Привет, {firstName}!</div>} */}
           </div>
           <div id='grid'>
             <div className="gridDiv">
