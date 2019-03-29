@@ -125,16 +125,15 @@ class Journal extends Component {
         return moment().format('L hh:mm:ss')
     }
     render() {
-        const { isAuthenticated, user: { firstName, email } } = this.props.auth;
+        // const { isAuthenticated, user: { firstName, email } } = this.props.auth;
         const { tradesInfo: { tradesInfo }, newDateTime, tradeFactor } = this.state;
         console.log(tradesInfo[0])
         let keyIndex = 0;
 
         return (
             <div className="center">
-                {/* {!isAuthenticated && <Redirect to='/' />} */}
+                {!this.props.auth.isAuthenticated && <Redirect to='/' />}
                 <h3><b><i>СДЕЛКИ</i></b></h3>
-                {isAuthenticated && <span>Привет, {firstName}!</span>}
                 <table className="table table-bordered rounded">
                     <thead className="thead-dark">
                         <tr key={'table header'} align='center'>
