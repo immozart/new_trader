@@ -30,7 +30,7 @@ async function seed() {
         capacity ? capacity = capacity : capacity = 1;
 
         const trade = await new Trades({
-            user: 'traider',
+            user: 'erk.rauf@gmail.com',
             tradeData: faker.date.past(),
             number: i + 1,
             security: tmpBUM,
