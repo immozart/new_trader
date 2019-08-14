@@ -1,63 +1,40 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/client/index.js',
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, '.build/client'),
-    publicPath: 'assets/'
-  },
-  plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: 'src/client/public',
-        to: 'public'
-      }
-    ], { debug: 'info' })
+  entry: [
+    './client/src/index.js'
   ],
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+    filename: 'bundle.js'
+  },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        resolve: {
-          extensions: ['.js', '.jsx', '.json']
-        },
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            presets: ['env', 'react'],
-            plugins: [
-              'transform-object-rest-spread',
-              'transform-class-properties',
-              'transform-runtime',
-              'transform-async-to-generator'
-            ]
-          }
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader', // creates style nodes from JS strings
-          { loader: 'css-loader', options: { importLoaders: 1 } }, // translates CSS into CommonJS
-          'postcss-loader' // post CSS transform
-        ]
+        use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2|eot|ttf|otf|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {}
-          }
-        ]
+        test: /\.(woff(2)?|ttf|eot|svg)$/,
+        use: ['file-loader']
       }
     ]
   },
   devServer: {
-    port: 9090
-  }
+    historyApiFallback: true,
+  },
+  plugins: [
+    new htmlWebpackPlugin({
+      template: './client/src/public/index.html'
+    })
+  ]
 };

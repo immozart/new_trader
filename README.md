@@ -1,22 +1,5 @@
-## Trader's Journal
-трейдерский сервис для анализа паттернов собственных торгов.
+Чтобы запустить приложение нужно выполнить комманды:
 
-#### MVP Functionality
-* Добавление в настройки сигналов, бумаг и количества лотов.
-* Добавление торговых данных в таблицу. 
-* Отображение графиков статистики.
+npm install && npm start
 
-#### Authors
-
-- [Рауф Эрк](https://github.com/RaufERK)
-- [Александр Нигамаев](https://github.com/bank45)
-- [Вадим Сметанин](https://github.com/immozart)
-  
-#### Next Steps
-
-- Усовершенствование авторизации
-- Мобильное приложение
-
-#### Contributing
-
-We conform to the [AirBnB JavaScript Style Guide](http://airbnb.io/projects/javascript)
+Клиентское приложение запускается на localhost:5000
